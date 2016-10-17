@@ -22,11 +22,11 @@ public class Menu extends BasicGameState {
 	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException
 	{
 		myFont = gc.getDefaultFont();
-		PlayButton = new Button(gc.getWidth()/4,200,gc.getWidth()/2,60,gc);
+		PlayButton = new Button(-200,-100,400,80,gc);
 		PlayButton.text = "Play";
-		OptionsButton = new Button(gc.getWidth()/4,300,gc.getWidth()/2,60,gc);
+		OptionsButton = new Button(-200,0,400,80,gc);
 		OptionsButton.text = "Options";
-		ExitButton = new Button(gc.getWidth()/4,400,gc.getWidth()/2,60,gc);
+		ExitButton = new Button(-200,100,400,80,gc);
 		ExitButton.text = "Exit";
 	}
 	

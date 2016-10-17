@@ -26,11 +26,11 @@ public class OptionsMenu extends BasicGameState {
 	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException
 	{
 		myFont = gc.getDefaultFont();
-		BackButton = new Button(gc.getWidth()/4,400,gc.getWidth()/2,60,gc);
+		BackButton = new Button(-(gc.getWidth()/2)+100,(gc.getHeight()/2)-100,gc.getWidth()-200,80,gc);
 		BackButton.text = "Back";
-		LowerResButton = new Button(gc.getWidth()/4,100,50,50,gc);
+		LowerResButton = new Button(-200,-100,50,50,gc);
 		LowerResButton.text = "<";
-		HigherResButton = new Button((gc.getWidth()/4)*3-50,100,50,50,gc);
+		HigherResButton = new Button(150,-100,50,50,gc);
 		HigherResButton.text = ">";
 		
 	}
@@ -45,7 +45,7 @@ public class OptionsMenu extends BasicGameState {
 		g.drawString(title, gc.getWidth()/2-(myFont.getWidth(title)/2), 50);
 		BackButton.render(g);
 		
-		g.drawString(String.valueOf(Resolutions[index]), gc.getWidth()/2-(myFont.getWidth(Resolutions[index])/2), 100+(myFont.getHeight(Resolutions[index])));
+		g.drawString(String.valueOf(Resolutions[index]), gc.getWidth()/2-(myFont.getWidth(Resolutions[index])/2), gc.getHeight()/2-100+(myFont.getHeight(Resolutions[index])));
 		LowerResButton.render(g);
 		HigherResButton.render(g);
 	}
@@ -64,6 +64,7 @@ public class OptionsMenu extends BasicGameState {
 					index--;
 					AppGameContainer app = (AppGameContainer) gc;
 					app.setDisplayMode(Integer.parseInt(Resolutions[index].split("x")[0]), Integer.parseInt(Resolutions[index].split("x")[1]), false);
+					ChangedResolution(gc);
 				}
 			}
 			if(HigherResButton.Hover())
@@ -73,9 +74,17 @@ public class OptionsMenu extends BasicGameState {
 					index++;
 					AppGameContainer app = (AppGameContainer) gc;
 					app.setDisplayMode(Integer.parseInt(Resolutions[index].split("x")[0]), Integer.parseInt(Resolutions[index].split("x")[1]), false);
+					ChangedResolution(gc);
 				}
 			}
 		}
+	}
+	
+	private void ChangedResolution(GameContainer gc)
+	{
+		BackButton.ReSet(-(gc.getWidth()/2)+100,(gc.getHeight()/2)-100,gc.getWidth()-200,80);
+		LowerResButton.ReSet(-200,-100,50,50);
+		HigherResButton.ReSet(150,-100,50,50);
 	}
 	
 	public int getID()

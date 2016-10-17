@@ -26,22 +26,38 @@ public class Button {
 		myFont = gc.getDefaultFont();
 	}
 	
+	public void ReSet(int x,int y, int w, int h)
+	{
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
+	}
+	
 	public void render(Graphics g)
 	{
+		int centerX = gc.getWidth()/2;
+		int centerY = gc.getHeight()/2;
+		
 		switch(type)
 		{
 		case 0:
-			g.drawRect(x, y, w, h);
-			g.drawString(text, ((w)/2 + x)-myFont.getWidth(text)/2, ((h)/2 + y)-myFont.getHeight(text)/2);
+			g.drawRect(centerX+x, centerY+y, w, h);
+			g.drawString(text, centerX+(w/2)+x-myFont.getWidth(text)/2, centerY+y+(h/2)-myFont.getHeight(text)/2);
+			//g.drawString(text, ((w)/2 + x)-myFont.getWidth(text)/2, ((h)/2 + y)-myFont.getHeight(text)/2);
 			break;
 		}
 	}
 	
 	public boolean Hover()
 	{
+		int centerX = gc.getWidth()/2;
+		int centerY = gc.getHeight()/2;
+		
 		Input input = gc.getInput();
 		int mouseX = Mouse.getX();
 		int mouseY = Mouse.getY();
-		return (mouseX > this.x && mouseX < this.x+this.w) &&(mouseY < gc.getHeight() - this.y && mouseY > gc.getHeight() - (this.y + this.h));
+		
+		return (mouseX > centerX+x && mouseX < centerX+x+w) &&(mouseY < gc.getHeight() - (centerY+y) && mouseY > gc.getHeight() - (centerY+y+h));
 	}
 }
