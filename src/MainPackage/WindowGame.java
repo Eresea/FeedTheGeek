@@ -11,6 +11,11 @@ import org.newdawn.slick.state.*;
  *
  */
 public class WindowGame extends StateBasedGame {
+	
+	public static void Save()
+	{
+		System.out.println("test");
+	}
 
 	private GameContainer container;
 	public static final int MainMenu = 0;

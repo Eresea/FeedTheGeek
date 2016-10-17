@@ -1,12 +1,15 @@
 package MainPackage;
 
+import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
+
 
 public class Play extends BasicGameState {
 	
 	private SpriteSheet IdleSprite;
 	private Animation IdleGaming;
+	private GameContainer gc;
 	
 	public Play(int state)
 	{
@@ -17,6 +20,7 @@ public class Play extends BasicGameState {
 	{
 		IdleSprite = new SpriteSheet("resources/IdleGaming.png",128,140);
 		IdleGaming = new Animation(IdleSprite,200);
+		this.gc = gc;
 	}
 	
 	public void GameStateUpdate(GameContainer gc, StateBasedGame sbg, int arg0) 
@@ -40,6 +44,15 @@ public class Play extends BasicGameState {
 		if(key == Input.KEY_LEFT)
 		{
 			System.out.println("LEFT");
+		}
+		if(key == Input.KEY_ESCAPE)
+		{
+			//Sys.alert("Quitter ?", "Êtes-vous sûr de vouloir quitter");
+			if(DialogBox.DialogBox("Quitter","Êtes-vous sûr de vouloir quitter le jeu ?") == 0)
+			{
+				WindowGame.Save();
+				gc.exit();
+			}
 		}
 	}
 	
