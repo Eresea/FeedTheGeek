@@ -46,6 +46,6 @@ public class WindowGame extends StateBasedGame {
 	 }*/
 
 	 public static void main(String[] args) throws SlickException {
-		 new AppGameContainer(new WindowGame(),640,480,false).start();
+		 new AppGameContainer(new WindowGame(),640,640,false).start();
 	 		}
 }
