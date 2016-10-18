@@ -31,7 +31,7 @@ public class Play extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
 	{
 		g.drawString("Playing Mode", 0, 0);
-		IdleGaming.draw(100, 100);
+		IdleGaming.draw((gc.getWidth()-(int)(gc.getWidth()/1.75))/2, (gc.getHeight()-(int)(gc.getHeight()/1.2))/2,(int)(gc.getWidth()/1.75),(int)(gc.getHeight()/1.2));
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
@@ -47,8 +47,8 @@ public class Play extends BasicGameState {
 		}
 		if(key == Input.KEY_ESCAPE)
 		{
-			//Sys.alert("Quitter ?", "Êtes-vous sûr de vouloir quitter");
-			if(DialogBox.DialogBox("Quitter","Êtes-vous sûr de vouloir quitter le jeu ?") == 0)
+			//Sys.alert("Quitter ?", "ï¿½tes-vous sï¿½r de vouloir quitter");
+			if(DialogBox.DialogBox("Quitter","ï¿½tes-vous sï¿½r de vouloir quitter le jeu ?") == 0)
 			{
 				WindowGame.Save();
 				gc.exit();
