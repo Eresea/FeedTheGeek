@@ -44,6 +44,14 @@ public class WindowGame extends StateBasedGame {
 	        	container.exit();
 	        }
 	 }*/
+	
+	 @Override
+	    public boolean closeRequested()
+	    {
+		 Save();
+	      System.exit(0); // Use this if you want to quit the app.
+	      return false;
+	    }
 
 	 public static void main(String[] args) throws SlickException {
 		 new AppGameContainer(new WindowGame(),640,480,false).start();

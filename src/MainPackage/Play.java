@@ -10,6 +10,7 @@ public class Play extends BasicGameState {
 	private SpriteSheet IdleSprite;
 	private Animation IdleGaming;
 	private GameContainer gc;
+	private StateBasedGame sbg;
 	
 	public Play(int state)
 	{
@@ -21,6 +22,7 @@ public class Play extends BasicGameState {
 		IdleSprite = new SpriteSheet("resources/IdleGaming.png",128,140);
 		IdleGaming = new Animation(IdleSprite,200);
 		this.gc = gc;
+		this.sbg = sbg;
 	}
 	
 	public void GameStateUpdate(GameContainer gc, StateBasedGame sbg, int arg0) 
@@ -50,8 +52,7 @@ public class Play extends BasicGameState {
 			//Sys.alert("Quitter ?", "�tes-vous s�r de vouloir quitter");
 			if(DialogBox.DialogBox("Quitter","�tes-vous s�r de vouloir quitter le jeu ?") == 0)
 			{
-				WindowGame.Save();
-				gc.exit();
+				sbg.closeRequested();
 			}
 		}
 	}
