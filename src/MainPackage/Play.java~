@@ -10,9 +10,13 @@ public class Play extends BasicGameState {
 	private SpriteSheet IdleSprite;
 	private Animation IdleGaming;
 	private GameContainer gc;
+<<<<<<< HEAD
 	private StateBasedGame sbg;
+=======
 	private int width;
 	private Color BackgroundColor = new Color(0.74117647058f,0.74117647058f,0.74117647058f);
+	
+>>>>>>> d21b176009954f7043fb2c4df8d65de08601acf8
 	
 	public Play(int state)
 	{

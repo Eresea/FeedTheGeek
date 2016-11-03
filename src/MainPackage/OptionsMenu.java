@@ -14,7 +14,7 @@ public class OptionsMenu extends BasicGameState {
 	private Button LowerResButton;
 	private Button HigherResButton;
 	
-	private String Resolutions[] = { "640x480","960x720","1280x960" };
+	private String Resolutions[] = { "640x640","960x960","1015x1015" };
 	private int index = 0;
 	//private String Graphics[];
 	
