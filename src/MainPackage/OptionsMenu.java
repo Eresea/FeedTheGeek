@@ -13,6 +13,7 @@ public class OptionsMenu extends BasicGameState {
 	private Button BackButton;
 	private Button LowerResButton;
 	private Button HigherResButton;
+	private CheckBox FullScreenCB;
 	
 	private String Resolutions[] = { "640x640","960x960","1015x1015" };
 	private int index = 0;
@@ -33,6 +34,9 @@ public class OptionsMenu extends BasicGameState {
 		HigherResButton = new Button(150,-100,50,50,gc);
 		HigherResButton.text = ">";
 		
+		FullScreenCB = new CheckBox(0,0,16,gc);
+		FullScreenCB.text = "Fullscreen : ";
+		
 	}
 	
 	/*public void GameStateUpdate(GameContainer gc, StateBasedGame sbg, int arg0) 
@@ -48,6 +52,7 @@ public class OptionsMenu extends BasicGameState {
 		g.drawString(String.valueOf(Resolutions[index]), gc.getWidth()/2-(myFont.getWidth(Resolutions[index])/2), gc.getHeight()/2-100+(myFont.getHeight(Resolutions[index])));
 		LowerResButton.render(g);
 		HigherResButton.render(g);
+		FullScreenCB.render(g);
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
@@ -76,6 +81,10 @@ public class OptionsMenu extends BasicGameState {
 					app.setDisplayMode(Integer.parseInt(Resolutions[index].split("x")[0]), Integer.parseInt(Resolutions[index].split("x")[1]), false);
 					ChangedResolution(gc);
 				}
+			}
+			if(FullScreenCB.Hover())
+			{
+				FullScreenCB.checked = !FullScreenCB.checked;
 			}
 		}
 	}
