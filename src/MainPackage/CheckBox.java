@@ -39,7 +39,7 @@ public void render(Graphics g)
 	g.drawString(text, centerX+x-size-(myFont.getWidth(text)), centerY+y-(myFont.getHeight(text)/4));
 	if(checked)
 	{
-		g.drawString("*",centerX+x,centerY+y);
+		g.drawString("x",centerX+x+3,centerY+y-2);
 	}
 }
 

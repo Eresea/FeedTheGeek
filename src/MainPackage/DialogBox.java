@@ -8,6 +8,6 @@ public class DialogBox {
 	
 	public static int DialogBox(String title, String text)
 	{
-		return JOptionPane.showConfirmDialog(null, text, title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		return JOptionPane.showConfirmDialog(null, text, title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); // Ne s'affiche pas en plein écran
 	}
 }

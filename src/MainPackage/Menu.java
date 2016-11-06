@@ -13,6 +13,7 @@ public class Menu extends BasicGameState {
 	private Button PlayButton;
 	private Button OptionsButton;
 	private Button ExitButton;
+	private Color BackgroundColor = Color.black;
 	
 	public Menu(int state)
 	{
@@ -37,6 +38,7 @@ public class Menu extends BasicGameState {
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
 	{
+		g.setBackground(BackgroundColor);
 		g.drawString(title, gc.getWidth()/2-(myFont.getWidth(title)/2), 50);
 		PlayButton.render(g);
 		OptionsButton.render(g);

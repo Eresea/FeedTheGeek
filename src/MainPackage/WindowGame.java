@@ -21,6 +21,7 @@ public class WindowGame extends StateBasedGame {
 	public static final int MainMenu = 0;
 	public static final int Play = 1;
 	public static final int OptionsMenu = 2;
+	private static AppGameContainer appgc;
 	
 	public WindowGame()
 	{
@@ -54,6 +55,7 @@ public class WindowGame extends StateBasedGame {
 	    }
 
 	 public static void main(String[] args) throws SlickException {
-		 new AppGameContainer(new WindowGame(),640,640,false).start();
+		 appgc = new AppGameContainer(new WindowGame(),1920,1080,true);
+		 appgc.start();
 	 		}
 }

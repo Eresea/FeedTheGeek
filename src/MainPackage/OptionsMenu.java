@@ -15,8 +15,9 @@ public class OptionsMenu extends BasicGameState {
 	private Button HigherResButton;
 	private CheckBox FullScreenCB;
 	
-	private String Resolutions[] = { "640x640","960x960","1015x1015" };
-	private int index = 0;
+	
+	private String Resolutions[] = { "640x480","1280x720","1920x1080" };
+	private int index = 2;
 	//private String Graphics[];
 	
 	public OptionsMenu(int state)
@@ -27,7 +28,7 @@ public class OptionsMenu extends BasicGameState {
 	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException
 	{
 		myFont = gc.getDefaultFont();
-		BackButton = new Button(-(gc.getWidth()/2)+100,(gc.getHeight()/2)-100,gc.getWidth()-200,80,gc);
+		BackButton = new Button(-(gc.getWidth()/8),(gc.getHeight()/2)-100,gc.getWidth()/4,80,gc);
 		BackButton.text = "Back";
 		LowerResButton = new Button(-200,-100,50,50,gc);
 		LowerResButton.text = "<";
@@ -35,6 +36,7 @@ public class OptionsMenu extends BasicGameState {
 		HigherResButton.text = ">";
 		
 		FullScreenCB = new CheckBox(0,0,16,gc);
+		FullScreenCB.checked=gc.isFullscreen();
 		FullScreenCB.text = "Fullscreen : ";
 		
 	}
@@ -68,7 +70,7 @@ public class OptionsMenu extends BasicGameState {
 				{
 					index--;
 					AppGameContainer app = (AppGameContainer) gc;
-					app.setDisplayMode(Integer.parseInt(Resolutions[index].split("x")[0]), Integer.parseInt(Resolutions[index].split("x")[1]), false);
+					app.setDisplayMode(Integer.parseInt(Resolutions[index].split("x")[0]), Integer.parseInt(Resolutions[index].split("x")[1]), FullScreenCB.checked);
 					ChangedResolution(gc);
 				}
 			}
@@ -78,20 +80,21 @@ public class OptionsMenu extends BasicGameState {
 				{
 					index++;
 					AppGameContainer app = (AppGameContainer) gc;
-					app.setDisplayMode(Integer.parseInt(Resolutions[index].split("x")[0]), Integer.parseInt(Resolutions[index].split("x")[1]), false);
+					app.setDisplayMode(Integer.parseInt(Resolutions[index].split("x")[0]), Integer.parseInt(Resolutions[index].split("x")[1]), FullScreenCB.checked);
 					ChangedResolution(gc);
 				}
 			}
 			if(FullScreenCB.Hover())
 			{
 				FullScreenCB.checked = !FullScreenCB.checked;
+				gc.setFullscreen(FullScreenCB.checked);
 			}
 		}
 	}
 	
 	private void ChangedResolution(GameContainer gc)
 	{
-		BackButton.ReSet(-(gc.getWidth()/2)+100,(gc.getHeight()/2)-100,gc.getWidth()-200,80);
+		BackButton.ReSet(-(gc.getWidth()/8),(gc.getHeight()/2)-100,gc.getWidth()/4,80);
 		LowerResButton.ReSet(-200,-100,50,50);
 		HigherResButton.ReSet(150,-100,50,50);
 	}
