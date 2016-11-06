@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
 public class CheckBox {
+	
 public boolean checked = false;
 public int x,y,size;
 public String text;

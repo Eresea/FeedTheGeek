@@ -13,7 +13,6 @@ public class Play extends BasicGameState {
 	private StateBasedGame sbg;
 	private int width;
 	private Color BackgroundColor = new Color(0.74117647058f,0.74117647058f,0.74117647058f);
-	
 	private float health =1,hunger = 1; // Plus tard sera dans la classe personnage
 	
 	private HUD hud;

@@ -7,14 +7,13 @@ import org.newdawn.slick.state.*;
 import org.newdawn.slick.font.*;
 
 public class Menu extends BasicGameState {
-	
 	public String title = "Feed the Geek";
 	private Font myFont;
 	private Button PlayButton;
 	private Button OptionsButton;
 	private Button ExitButton;
 	private Color BackgroundColor = Color.black;
-	
+
 	public Menu(int state)
 	{
 		

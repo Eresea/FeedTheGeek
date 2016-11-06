@@ -4,7 +4,6 @@ import org.newdawn.slick.*;
 
 public class HUD {
 private Play p;
-
 private Bar healthBar;
 private Bar hungerBar;
 

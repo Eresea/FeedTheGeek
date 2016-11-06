@@ -15,7 +15,6 @@ public class OptionsMenu extends BasicGameState {
 	private Button HigherResButton;
 	private CheckBox FullScreenCB;
 	
-	
 	private String Resolutions[] = { "640x480","1280x720","1920x1080" };
 	private int index = 2;
 	//private String Graphics[];

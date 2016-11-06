@@ -23,6 +23,7 @@ public class WindowGame extends StateBasedGame {
 	public static final int OptionsMenu = 2;
 	private static AppGameContainer appgc;
 	
+	
 	public WindowGame()
 	{
 		super("MainPackage :: WindowGame");

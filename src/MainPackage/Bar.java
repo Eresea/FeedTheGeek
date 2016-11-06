@@ -9,6 +9,7 @@ public Color frontColor = Color.green;
 
 private float value;
 int x,y,h,l;
+
 GameContainer gc;
 
 Bar(int x,int y, int l, int h,GameContainer gc)
