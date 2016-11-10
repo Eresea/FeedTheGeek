@@ -3,6 +3,9 @@
  */
 package MainPackage;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
@@ -22,7 +25,6 @@ public class WindowGame extends StateBasedGame {
 	public static final int Play = 1;
 	public static final int OptionsMenu = 2;
 	private static AppGameContainer appgc;
-	
 	
 	public WindowGame()
 	{
@@ -56,7 +58,8 @@ public class WindowGame extends StateBasedGame {
 	    }
 
 	 public static void main(String[] args) throws SlickException {
-		 appgc = new AppGameContainer(new WindowGame(),1920,1080,true);
+		 Dimension scrnsize = Toolkit.getDefaultToolkit().getScreenSize();
+		 appgc = new AppGameContainer(new WindowGame(),scrnsize.width,scrnsize.height,true);
 		 appgc.start();
 	 		}
 }
