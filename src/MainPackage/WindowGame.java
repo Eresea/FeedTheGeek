@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
+import org.lwjgl.*;
+import org.lwjgl.opengl.Display;
 
 /**
  * @author Eresea
@@ -58,8 +60,12 @@ public class WindowGame extends StateBasedGame {
 	    }
 
 	 public static void main(String[] args) throws SlickException {
+		 Display.setResizable(true);
 		 Dimension scrnsize = Toolkit.getDefaultToolkit().getScreenSize();
+		 UIComponent.width = scrnsize.width;
+		 UIComponent.height = scrnsize.height;
 		 appgc = new AppGameContainer(new WindowGame(),scrnsize.width,scrnsize.height,true);
+		 appgc.setTitle("Feed the Geek");
 		 appgc.start();
 	 		}
 }

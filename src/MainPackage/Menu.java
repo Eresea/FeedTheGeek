@@ -13,6 +13,7 @@ public class Menu extends BasicGameState {
 	private Button OptionsButton;
 	private Button ExitButton;
 	private Color BackgroundColor = Color.black;
+	float sx =1, sy=1;
 
 	public Menu(int state)
 	{
@@ -22,11 +23,11 @@ public class Menu extends BasicGameState {
 	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException
 	{
 		myFont = gc.getDefaultFont();
-		PlayButton = new Button(-200,-100,400,80,gc);
+		PlayButton = new Button(660,350,600,140,gc);
 		PlayButton.text = "Play";
-		OptionsButton = new Button(-200,0,400,80,gc);
+		OptionsButton = new Button(660,500,600,140,gc);
 		OptionsButton.text = "Options";
-		ExitButton = new Button(-200,100,400,80,gc);
+		ExitButton = new Button(660,650,600,140,gc);
 		ExitButton.text = "Exit";
 	}
 	
@@ -37,11 +38,23 @@ public class Menu extends BasicGameState {
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
 	{
+		if(Display.wasResized())
+		{
+			UIComponent.top = gc.getHeight()-Display.getHeight();
+			UIComponent.width = Display.getWidth();
+			UIComponent.height = Display.getHeight();
+			sx = (float)(Display.getWidth())/(float)(gc.getWidth());
+			sy = (float)(Display.getHeight())/(float)(gc.getHeight());
+		}
+		
 		g.setBackground(BackgroundColor);
-		g.drawString(title, gc.getWidth()/2-(myFont.getWidth(title)/2), 50);
+		g.drawString(title, Display.getWidth()/2-(myFont.getWidth(title)/2), UIComponent.top+50);
 		PlayButton.render(g);
 		OptionsButton.render(g);
 		ExitButton.render(g);
+		
+		if(sy < sx) g.scale(sy,sy);
+		else g.scale(sx,sx);
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
