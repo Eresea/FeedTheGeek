@@ -16,7 +16,7 @@ public class Assiette extends UIComponent{
 	
 	public Assiette(int nutrition, int poison,int durabilite,GameContainer gc)
 	{
-		super(1200,650,100,50,gc);
+		super(1200,670,100,50,gc);
 		this.nutrition = nutrition;
 		this.poison = poison;
 		this.gc = gc;
@@ -62,7 +62,7 @@ public class Assiette extends UIComponent{
 		g.fillOval(width*x,top+(height*y), width*(100.0f/1920), value*-(height*(25.0f/1080)));
 		g.setColor(tmp);
 		//g.fillRect(0,25,100,50); // Assiette
-		g.fillRect(width*x,top+(height*y),width*(100.0f/1920),height*(50.0f/1080));
+		g.fillRect(width*x,top+(height*y),width*(100.0f/1920),height*(25.0f/1080));
 	}
 	
 	public boolean Hover()

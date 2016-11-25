@@ -1,5 +1,6 @@
 package MainPackage;
 
+import java.util.*;
 import org.lwjgl.Sys;
 import org.newdawn.slick.geom.*;
 import org.lwjgl.opengl.Display;
@@ -16,6 +17,7 @@ public class Play extends BasicGameState {
 	private Color BackgroundColor = new Color(0.74117647058f,0.74117647058f,0.74117647058f);
 	public float health =1,hunger = 1; // Plus tard sera dans la classe personnage
 	float sx=1,sy=1;
+	Timer timer = new Timer();
 	
 	Color ScreenColor = Color.gray; // A utiliser plus tard sur la zone de l'écran (avant le personnage)
 	
@@ -26,22 +28,34 @@ public class Play extends BasicGameState {
 		
 	}
 	
-	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException
+	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException
 	{
 		IdleSprite = new SpriteSheet("resources/IdleGaming.png",128,140);
 		IdleGaming = new Animation(IdleSprite,200);
 		this.gc = gc;
 		this.sbg = sbg;
 		hud = new HUD(this,gc);
+		
+		timer.schedule(new TimerTask() {
+			  @Override
+			  public void run() {
+			   Tick();
+			  }
+			}, 200,200);
+	}
+	
+	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException
+	{
+		
 	}
 	
 	public void Tick()
 	{ //plus tard appeler la fonction tick dans personnage par exemple
-		hunger -= 0.00002;
+		hunger -= 0.001;
 		if(hunger <= 0)
 		{
 			hunger = 0;
-			health -= 0.0001;
+			health -= 0.001;
 		}
 		hud.updateValues(health, hunger);
 	}
@@ -78,8 +92,6 @@ public class Play extends BasicGameState {
 	{
 		IdleGaming.update(delta);
 		hud.update();
-		
-		Tick();
 	}
 	
 	public void keyPressed(int key, char c)

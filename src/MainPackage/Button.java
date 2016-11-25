@@ -9,7 +9,7 @@ public class Button extends UIComponent{
 	public int type = 0;
 	public String text ="";
 	public Font myFont;
-	public Color BackGroundColor = Color.black;
+	public Color BackGroundColor = Color.transparent;
 	GameContainer gc;
 	
 	
@@ -35,7 +35,15 @@ public class Button extends UIComponent{
 			switch(type)
 			{
 			case 0:
-				g.drawRect(width*x,top+(height*y),width*w,height*h);
+				if(BackGroundColor != Color.transparent)
+				{
+					Color tmp = g.getColor();
+					g.setColor(BackGroundColor);
+					g.fillRect(width*x,top+(height*y),width*w,height*h);
+					g.setColor(tmp);
+				}
+				g.drawRect(width*x, top+(height*y), width*w, height*h);
+				
 				//g.setColor(BackGroundColor);
 				//g.fillRect(width*x,top+(height*y),width*w,height*h);
 				//g.setColor(Color.white);

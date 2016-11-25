@@ -18,7 +18,7 @@ Bar(int x,int y, int w, int h,GameContainer gc)
 }
 
 public void setValue ( float f ) {
-	   value = f;
+	   value = Math.max(0,Math.min(1,f));
 	} 
 
 public void render(Graphics g)

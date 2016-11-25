@@ -65,6 +65,7 @@ public class WindowGame extends StateBasedGame {
 		 UIComponent.width = scrnsize.width;
 		 UIComponent.height = scrnsize.height;
 		 appgc = new AppGameContainer(new WindowGame(),scrnsize.width,scrnsize.height,true);
+		 appgc.setVSync(true);
 		 appgc.setTitle("Feed the Geek");
 		 appgc.start();
 	 		}
