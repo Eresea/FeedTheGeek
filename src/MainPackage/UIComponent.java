@@ -42,4 +42,26 @@ public class UIComponent {
 		}
 		return false;
 	}
+	
+	public static void drawText(String text, Font f, Graphics g,int x,int y,int w)
+	{
+		int j = 0;
+	    String words[] = text.split(" ");
+	    String toDraw = "";
+	    int currentW = 0;
+	    for(int i=0;i<words.length;i++)
+	    {
+	    	if(f.getWidth(toDraw + words[i]) > w) // Si le text est trop grand
+	    	{
+	    		g.drawString(toDraw, x, y+(j*(f.getHeight(text))));
+	    		toDraw = " " + words[i];
+	    		j++;
+	    	}
+	    	else
+	    	{
+	    		toDraw += " " + words[i];
+	    	}
+	    }
+	    g.drawString(toDraw, x, y+(j*(f.getHeight(text))));
+	}
 }
