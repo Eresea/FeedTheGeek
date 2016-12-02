@@ -4,6 +4,7 @@
 package MainPackage;
 
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.newdawn.slick.*;
@@ -17,15 +18,20 @@ import org.lwjgl.opengl.Display;
  */
 public class WindowGame extends StateBasedGame {
 	
-	public static void Save()
+	public static File Save()
 	{
 		System.out.println("test");
+		return null;
+	}
+	
+	public static void Load(File fi)
+	{
+		System.out.println("Loading " + fi.getName());
 	}
 
 	private GameContainer container;
 	public static final int MainMenu = 0;
 	public static final int Play = 1;
-	public static final int OptionsMenu = 2;
 	private static AppGameContainer appgc;
 	
 	public WindowGame()
@@ -33,14 +39,12 @@ public class WindowGame extends StateBasedGame {
 		super("MainPackage :: WindowGame");
 		this.addState(new Menu(MainMenu));
 		this.addState(new Play(Play));
-		this.addState(new OptionsMenu(OptionsMenu));
 	}
 	
 	public void initStatesList(GameContainer gc) throws SlickException
 	{
 		this.getState(MainMenu).init(gc, this);
 		this.getState(Play).init(gc, this);
-		this.getState(OptionsMenu).init(gc, this);
 		this.enterState(MainMenu);
 	}
 	
@@ -68,5 +72,5 @@ public class WindowGame extends StateBasedGame {
 		 appgc.setVSync(true);
 		 appgc.setTitle("Feed the Geek");
 		 appgc.start();
-	 		}
+	 	}
 }

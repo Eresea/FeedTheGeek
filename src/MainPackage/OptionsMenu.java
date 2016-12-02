@@ -1,29 +1,21 @@
 package MainPackage;
 
-import java.awt.Toolkit;
-import java.util.*;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 import org.newdawn.slick.font.*;
 import org.newdawn.slick.GameContainer;
 
-public class OptionsMenu extends BasicGameState {
+public class OptionsMenu {
 	
 	public String title = "Options Menu";
 	private Font myFont;
 	private Button BackButton;
 	private CheckBox FullScreenCB;
-	//private String Graphics[];
+	private Menu MainMenu;
 	float sx = 1,sy = 1; // Scaling from window
 	
-	public OptionsMenu(int state)
-	{
-		
-	}
-	
-	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException
+	public OptionsMenu(GameContainer gc,Menu mM)
 	{
 		myFont = gc.getDefaultFont();
 		BackButton = new Button(660,940,600,100,gc);
@@ -32,6 +24,8 @@ public class OptionsMenu extends BasicGameState {
 		FullScreenCB = new CheckBox(952,232,16,gc);
 		FullScreenCB.checked=gc.isFullscreen();
 		FullScreenCB.text = "Fullscreen : ";
+		
+		MainMenu = mM;
 	}
 	
 	/*public void GameStateUpdate(GameContainer gc, StateBasedGame sbg, int arg0) 
@@ -67,7 +61,7 @@ public class OptionsMenu extends BasicGameState {
 		
 		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
 		{
-			if(BackButton.Hover()) sbg.enterState(0);
+			if(BackButton.Hover()) MainMenu.changeMenu(0);
 			if(FullScreenCB.Hover())
 			{
 				FullScreenCB.checked = !FullScreenCB.checked;

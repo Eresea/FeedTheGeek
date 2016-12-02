@@ -9,26 +9,43 @@ import org.newdawn.slick.font.*;
 public class Menu extends BasicGameState {
 	public String title = "Feed the Geek";
 	private Font myFont;
-	private Button PlayButton;
+	private Button NewGame;
+	private Button LoadGame;	
 	private Button OptionsButton;
 	private Button ExitButton;
 	private Color BackgroundColor = Color.black;
 	float sx =1, sy=1;
-
+	public int menu = 0;
+	
+	private LoadMenu loadMenu;
+	private OptionsMenu optionsMenu;
+	private NewGameMenu newGameMenu;
+	
 	public Menu(int state)
 	{
 		
 	}
 	
+	public void changeMenu(int m)
+	{
+		menu = m;
+	}
+	
 	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException
 	{
 		myFont = gc.getDefaultFont();
-		PlayButton = new Button(660,350,600,140,gc);
-		PlayButton.text = "Play";
-		OptionsButton = new Button(660,500,600,140,gc);
+		NewGame = new Button(660,300,600,140,gc);
+		NewGame.text = "Nouvelle Partie";
+		LoadGame = new Button(660,450,600,140,gc);
+		LoadGame.text = "Charger";
+		OptionsButton = new Button(660,600,600,140,gc);
 		OptionsButton.text = "Options";
-		ExitButton = new Button(660,650,600,140,gc);
+		ExitButton = new Button(660,750,600,140,gc);
 		ExitButton.text = "Exit";
+		
+		loadMenu = new LoadMenu(gc,this);
+		optionsMenu = new OptionsMenu(gc,this);
+		newGameMenu = new NewGameMenu(gc,this);
 	}
 	
 	/*public void GameStateUpdate(GameContainer gc, StateBasedGame sbg, int arg0) 
@@ -38,40 +55,69 @@ public class Menu extends BasicGameState {
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
 	{
-		if(Display.wasResized())
-		{
-			UIComponent.top = gc.getHeight()-Display.getHeight();
-			UIComponent.width = Display.getWidth();
-			UIComponent.height = Display.getHeight();
-			sx = (float)(Display.getWidth())/(float)(gc.getWidth());
-			sy = (float)(Display.getHeight())/(float)(gc.getHeight());
-		}
-		
 		g.setBackground(BackgroundColor);
-		g.drawString(title, Display.getWidth()/2-(myFont.getWidth(title)/2), UIComponent.top+50);
-		PlayButton.render(g);
-		OptionsButton.render(g);
-		ExitButton.render(g);
-		
-		if(sy < sx) g.scale(sy,sy);
-		else g.scale(sx,sx);
+		switch(menu)
+		{
+		case 0:
+			if(Display.wasResized())
+			{
+				UIComponent.top = gc.getHeight()-Display.getHeight();
+				UIComponent.width = Display.getWidth();
+				UIComponent.height = Display.getHeight();
+				sx = (float)(Display.getWidth())/(float)(gc.getWidth());
+				sy = (float)(Display.getHeight())/(float)(gc.getHeight());
+			}
+			
+			g.drawString(title, Display.getWidth()/2-(myFont.getWidth(title)/2), UIComponent.top+50);
+			NewGame.render(g);
+			LoadGame.render(g);
+			OptionsButton.render(g);
+			ExitButton.render(g);
+			
+			if(sy < sx) g.scale(sy,sy);
+			else g.scale(sx,sx);
+			break;
+		case 1:
+			optionsMenu.render(gc, sbg, g);
+			break;
+		case 2:
+			loadMenu.render(gc, sbg, g);
+			break;
+		case 3:
+			newGameMenu.render(gc, sbg, g);
+			break;
+		}
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
 	{
 		Input input = gc.getInput();
 		
-		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+		switch(menu)
 		{
-			if(PlayButton.Hover()) sbg.enterState(1);
-			if(OptionsButton.Hover()) sbg.enterState(2);
-			if(ExitButton.Hover()) gc.exit();
+		case 0:
+			if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+			{
+				if(NewGame.Hover()) changeMenu(3);
+				if(OptionsButton.Hover()) changeMenu(1);
+				if(LoadGame.Hover()) changeMenu(2);
+				if(ExitButton.Hover()) gc.exit();
+			}
+			break;
+		case 1:
+			optionsMenu.update(gc, sbg, delta);
+			break;
+		case 2:
+			loadMenu.update(gc, sbg, delta);
+			break;
+		case 3:
+			newGameMenu.update(gc, sbg, delta);
+			break;
 		}
 	}
 	
 	public int getID()
 	{
-		
 		return 0;
 	}
 }

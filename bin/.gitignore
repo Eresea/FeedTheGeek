@@ -1,4 +1,5 @@
 /MainPackage/
-/TriggerZone.class
 /Utility/
-/Assiette.class
+/LoadMenu.class
+/NewGameMenu.class
+/TextBox.class

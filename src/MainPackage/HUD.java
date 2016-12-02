@@ -156,7 +156,7 @@ class Inventory
 		
 		for(int i=0;i<Items.size();i++)
 		{
-			createButton(Items.get(i));
+			ItemButtons.add(createButton(Items.get(i),-1));
 		}
 		
 		descriptions = new itemDescription(gc,1005,255,430,740,null);
@@ -165,9 +165,9 @@ class Inventory
 		this.parent = parent;
 	}
 	
-	private void createButton(Item it)
+	private Button createButton(Item it,int i)
 	{
-		int i = ItemButtons.size();
+		if(i==-1) i = ItemButtons.size();
 		int x = 1440+(150*(i%3));
 		int y = 300+(150*((int)(i/3)));
 		
@@ -183,7 +183,7 @@ class Inventory
 			break;
 		}
 		
-		ItemButtons.add(b);
+		return b;
 	}
 	
 	public void AddItem(Item i)
@@ -197,7 +197,7 @@ class Inventory
 			}
 		}
 		Items.add(i);
-		createButton(i);
+		ItemButtons.add(createButton(i,-1));
 	}
 	
 	public void render(Graphics g)
@@ -226,22 +226,7 @@ class Inventory
 	{
 		for(int j=i;j<ItemButtons.size();j++)
 		{
-			int x = 1440+(150*(j%3));
-			int y = 300+(150*((int)(j/3)));
-			
-			Button b = new Button(x,y,150,150,gc);
-			b.text = Items.get(j).name;
-			switch(Items.get(j).type)
-			{
-			case 0:
-				b.BackGroundColor = Color.blue;
-				break;
-			case 1:
-				b.BackGroundColor = Color.red;
-				break;
-			}
-			
-			ItemButtons.set(j, b);
+			ItemButtons.set(j, createButton(Items.get(j),j));
 		}
 	}
 	
