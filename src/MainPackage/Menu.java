@@ -26,6 +26,11 @@ public class Menu extends BasicGameState {
 		
 	}
 	
+	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException
+	{
+		changeMenu(0);
+	}
+	
 	public void changeMenu(int m)
 	{
 		menu = m;

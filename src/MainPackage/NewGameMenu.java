@@ -32,18 +32,18 @@ public class NewGameMenu {
 		BackButton.text = "Back";
 		StartButton = new Button(990,940,500,100,gc);
 		StartButton.text = "Jouer";
-		nomTBox = new TextBox(430,400,200,gc.getDefaultFont(),gc);
+		nomTBox = new TextBox(430,300,200,gc.getDefaultFont(),gc);
 		nomTBox.text = "Nom : ";
 		
-		LowerColorIndex1 = new Button(405,275,50,50,gc);
+		LowerColorIndex1 = new Button(715,275,50,50,gc);
 		LowerColorIndex1.text = "<";
 		LowerColorIndex1.visible = false;
-		HigherColorIndex1 = new Button(525,275,50,50,gc);
+		HigherColorIndex1 = new Button(835,275,50,50,gc);
 		HigherColorIndex1.text = ">";
 		
-		LowerColorIndex2 = new Button(405,330,50,50,gc);
+		LowerColorIndex2 = new Button(715,330,50,50,gc);
 		LowerColorIndex2.text = "<";
-		HigherColorIndex2 = new Button(525,330,50,50,gc);
+		HigherColorIndex2 = new Button(835,330,50,50,gc);
 		HigherColorIndex2.text = ">";
 	}
 	
@@ -72,16 +72,16 @@ public class NewGameMenu {
 		HigherColorIndex1.render(g);
 		HigherColorIndex2.render(g);
 		
-		g.drawString("Couleur principale : ", 400-myFont.getWidth("Couleur principale : "), 300-myFont.getHeight("Couleur principale : ")/2);
-		g.drawString("Couleur secondaire : ", 400-myFont.getWidth("Couleur secondaire : "), 355-myFont.getHeight("Couleur secondaire : ")/2);
+		g.drawString("Couleur principale : ", UIComponent.width*(690.0f/1920.0f)-myFont.getWidth("Couleur principale : "), UIComponent.top+(UIComponent.height*(300.0f/1080.0f))-myFont.getHeight("Couleur principale : ")/2);
+		g.drawString("Couleur secondaire : ", UIComponent.width*(690.0f/1920.0f)-myFont.getWidth("Couleur secondaire : "), UIComponent.top+(UIComponent.height*(355.0f/1080.0f))-myFont.getHeight("Couleur secondaire : ")/2);
 		Color tmp = g.getColor();
 		g.setColor(colors[ColorIndex1]);
-		g.fillRect(465, 275, 50, 50);
+		g.fillRect(UIComponent.width*(775.0f/1920.0f), UIComponent.top+(UIComponent.height*(275.0f/1080.0f)), UIComponent.width*(50.0f/1920.0f), UIComponent.height*(50.0f/1080.0f));
 		g.setColor(colors[ColorIndex2]);
-		g.fillRect(465, 330, 50, 50);
+		g.fillRect(UIComponent.width*(775.0f/1920.0f), UIComponent.top+(UIComponent.height*(330.0f/1080.0f)), UIComponent.width*(50.0f/1920.0f), UIComponent.height*(50.0f/1080.0f));
 		g.setColor(tmp);
-		g.drawRect(465, 275, 50, 50);
-		g.drawRect(465, 330, 50, 50);
+		g.drawRect(UIComponent.width*(775.0f/1920.0f), UIComponent.top+(UIComponent.height*(275.0f/1080.0f)), UIComponent.width*(50.0f/1920.0f), UIComponent.height*(50.0f/1080.0f));
+		g.drawRect(UIComponent.width*(775.0f/1920.0f), UIComponent.top+(UIComponent.height*(330.0f/1080.0f)), UIComponent.width*(50.0f/1920.0f), UIComponent.height*(50.0f/1080.0f));
 		
 		if(sy < sx) g.scale(sy,sy);
 		else g.scale(sx,sx);

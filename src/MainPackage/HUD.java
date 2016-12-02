@@ -146,6 +146,8 @@ class Inventory
 	private HUD parent;
 	private GameContainer gc;
 	private itemDescription descriptions;
+	
+	private int xItem;
 	Inventory(HUD parent, GameContainer gc)
 	{
 		Items = new ArrayList<Item>();
@@ -153,6 +155,8 @@ class Inventory
 		returnButton = new Button(1440,915,455,80,gc);
 		returnButton.BackGroundColor = Color.black;
 		returnButton.text = "Retour";
+		
+		xItem = (gc.getWidth()-(int)(UIComponent.width*(1440.0f/1920.0f)))/5;
 		
 		for(int i=0;i<Items.size();i++)
 		{
@@ -168,10 +172,10 @@ class Inventory
 	private Button createButton(Item it,int i)
 	{
 		if(i==-1) i = ItemButtons.size();
-		int x = 1440+(150*(i%3));
-		int y = 300+(150*((int)(i/3)));
+		int x = (int)(1440+((xItem*(i%3))));
+		int y = 300+(xItem*((int)(i/3)));
 		
-		Button b = new Button(x,y,150,150,gc);
+		Button b = new Button(x,y,xItem,xItem,gc);
 		b.text = it.name;
 		switch(it.type)
 		{
