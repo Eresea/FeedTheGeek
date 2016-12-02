@@ -17,16 +17,22 @@ import org.lwjgl.opengl.Display;
  *
  */
 public class WindowGame extends StateBasedGame {
+	public static String saveName = "";
 	
 	public static File Save()
 	{
+		
 		System.out.println("test");
 		return null;
 	}
 	
 	public static void Load(File fi)
 	{
-		System.out.println("Loading " + fi.getName());
+		if(fi.canRead())
+		{
+			System.out.println("Loading " + fi.getName());
+		}
+		else System.out.println("Impossible de lire/écrire sur ce fichier.");
 	}
 
 	private GameContainer container;

@@ -32,7 +32,7 @@ public class NewGameMenu {
 		BackButton.text = "Back";
 		StartButton = new Button(990,940,500,100,gc);
 		StartButton.text = "Jouer";
-		nomTBox = new TextBox(430,300,200,gc.getDefaultFont(),gc);
+		nomTBox = new TextBox(685,450,200,gc.getDefaultFont(),gc);
 		nomTBox.text = "Nom : ";
 		
 		LowerColorIndex1 = new Button(715,275,50,50,gc);
@@ -108,6 +108,8 @@ public class NewGameMenu {
 			{
 				if(true) //Conditions
 				{
+					System.out.println(nomTBox.getText());
+					WindowGame.saveName = nomTBox.getText();
 					//WindowGame.Load(WindowGame.Save(/* Elements */)); //Sauvegarde et charge
 					sbg.enterState(1);
 				}

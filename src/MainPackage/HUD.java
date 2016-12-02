@@ -76,6 +76,8 @@ private GameContainer gc;
 			Shop.render(g);
 			break;
 		}
+		
+		g.drawString(WindowGame.saveName, (int)(UIComponent.width*(0.495)-g.getFont().getWidth(WindowGame.saveName)/2), (int)(UIComponent.top+(UIComponent.height*(0.4))));
 	}
 	
 	public void addItem(Item i)
@@ -156,7 +158,7 @@ class Inventory
 		returnButton.BackGroundColor = Color.black;
 		returnButton.text = "Retour";
 		
-		xItem = (gc.getWidth()-(int)(UIComponent.width*(1440.0f/1920.0f)))/5;
+		xItem = 150;
 		
 		for(int i=0;i<Items.size();i++)
 		{
@@ -292,18 +294,51 @@ class Shop
 	private Button returnButton;
 	private GameContainer gc;
 	private itemDescription descriptions;
+	private ArrayList<Button> ItemButtons;
+	private int xItem;
 	
 	Shop(HUD parent,GameContainer gc)
 	{
 		Items = new ArrayList<Item>();
 		Prices = new ArrayList<Integer>();
+		ItemButtons = new ArrayList<Button>();
 		returnButton = new Button(1440,915,455,80,gc);
 		returnButton.BackGroundColor = Color.black;
 		returnButton.text = "Retour";
 		descriptions = new itemDescription(gc,1005,255,430,740,null);
+		xItem = 150;
+		
+		Items.add(new Item(0,-1,"Pomme",null,"L, le sais-tu ? Le dieu de la mort ne mange que des pommes."));
+		Prices.add(5);
+		
+		for(int i=0;i<Items.size();i++)
+		{
+			//ItemButtons.add(createButton(Items.get(i),i)); //STOPPED HERE
+		}
 		
 		this.gc = gc;
 		this.parent = parent;
+	}
+	
+	private Button createButton(Item it,int i)
+	{
+		if(i==-1) i = ItemButtons.size();
+		int x = (int)(1440+((xItem*(i%3))));
+		int y = 300+(xItem*((int)(i/3)));
+		
+		Button b = new Button(x,y,xItem,xItem,gc);
+		b.text = it.name;
+		switch(it.type)
+		{
+		case 0:
+			b.BackGroundColor = Color.blue;
+			break;
+		case 1:
+			b.BackGroundColor = Color.red;
+			break;
+		}
+		
+		return b;
 	}
 	
 	public Item BuyItem(int index)
@@ -323,6 +358,11 @@ class Shop
 		g.fillRect(UIComponent.width*1000/1920,UIComponent.top+(UIComponent.height*250/1080),UIComponent.width*900/1920,UIComponent.height*750/1080);
 		g.setColor(tmp);
 		g.drawRect(UIComponent.width*1000/1920, UIComponent.top+(UIComponent.height*250/1080), UIComponent.width*900/1920, UIComponent.height*750/1080);
+		
+		for(int i=0;i<ItemButtons.size();i++)
+		{
+			ItemButtons.get(i).render(g);
+		}
 		
 		descriptions.render(g);
 		returnButton.render(g);

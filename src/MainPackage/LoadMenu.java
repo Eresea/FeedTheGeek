@@ -97,8 +97,8 @@ class SaveDescription
 	
 	public void render(Graphics g)
 	{
-		g.drawString(name, 380-(myFont.getWidth(name)/2), UIComponent.top+(UIComponent.height*(250.0f/1080.0f)));
-		g.drawString(Date, 380-(myFont.getWidth(Date)/2), UIComponent.top+(UIComponent.height*(600.0f/1080.0f)));
+		g.drawString(name, UIComponent.width*(380.0f/1920.0f)-(myFont.getWidth(name)/2), UIComponent.top+(UIComponent.height*(250.0f/1080.0f)));
+		g.drawString(Date, UIComponent.width*(380.0f/1920.0f)-(myFont.getWidth(Date)/2), UIComponent.top+(UIComponent.height*(600.0f/1080.0f)));
 		
 		g.drawRect(UIComponent.width*(100.0f/1920.0f), UIComponent.top+(UIComponent.height*(110.0f/1080.0f)), UIComponent.width*(560.0f/1920.0f), UIComponent.height*(720.0f/1080.0f));
 	}

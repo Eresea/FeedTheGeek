@@ -20,7 +20,7 @@ public class TextBox extends UIComponent{
 		super(x,y,w,(int)((float)(f.getHeight("Test"))*1.5f),gc);		
 		myFont = f;
 		this.gc = gc;
-		tField = new TextField(gc,f,(int)(width*x/1920.0f),(int)(top+(height*y/1080.0f)),(int)(width*(w/1920.0f)),(int)(height*h));
+		tField = new TextField(gc,f,(int)(width*x/1920.0f),(int)(top+(height*y/1080.0f)),(int)(width*(w/1920.0f)),(int)(height*h*1.35));
 		tField.setBackgroundColor(BackgroundColor);
 	}
 	
@@ -30,6 +30,11 @@ public class TextBox extends UIComponent{
 		tField.setBackgroundColor(BackgroundColor);
 	}
 	
+	public String getText()
+	{
+		return tField.getText().isEmpty() ? "" : tField.getText();
+	}
+	
 	public void render(Graphics g)
 	{
 		tField.render(gc, g);
@@ -37,8 +42,6 @@ public class TextBox extends UIComponent{
 		{
 			g.drawString(text, (int)(width*x)-myFont.getWidth(text),(int)(y*height));
 		}
-		
-		super.render(g);
 	}
 	
 	public void setFocus(boolean focus)

@@ -53,10 +53,6 @@ public class Menu extends BasicGameState {
 		newGameMenu = new NewGameMenu(gc,this);
 	}
 	
-	/*public void GameStateUpdate(GameContainer gc, StateBasedGame sbg, int arg0) 
-	{
-		 
-	}*/
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
 	{
@@ -118,6 +114,14 @@ public class Menu extends BasicGameState {
 		case 3:
 			newGameMenu.update(gc, sbg, delta);
 			break;
+		}
+	}
+	
+	public void keyPressed(int key, char c)
+	{
+		if(key == Input.KEY_ESCAPE)
+		{
+			changeMenu(0);
 		}
 	}
 	
