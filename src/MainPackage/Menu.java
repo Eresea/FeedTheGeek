@@ -1,9 +1,12 @@
 package MainPackage;
 
+import javax.swing.JOptionPane;
+
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
+import java.awt.EventQueue;
 import org.newdawn.slick.font.*;
 
 public class Menu extends BasicGameState {
@@ -51,8 +54,7 @@ public class Menu extends BasicGameState {
 		loadMenu = new LoadMenu(gc,this);
 		optionsMenu = new OptionsMenu(gc,this);
 		newGameMenu = new NewGameMenu(gc,this);
-	}
-	
+	}	
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
 	{

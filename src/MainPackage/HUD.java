@@ -4,6 +4,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.gui.TextField;
 import Utility.Item;
 import java.util.*;
+import Utility.Dialog;
+import org.newdawn.slick.state.*;
 
 public class HUD {
 private Play p;
@@ -13,6 +15,7 @@ private Button InventoryButton;
 private Button ShopButton;
 private Button Work;
 private int showUIType = 0;
+private List<Dialog> Dialogs;
 
 public static int Money = 10;
 
@@ -22,16 +25,19 @@ private Shop Shop;
 private Assiette Assiette;
 
 private GameContainer gc;
+private StateBasedGame sbg;
 
-	HUD(Play p, GameContainer gc)
+	HUD(Play p, GameContainer gc,StateBasedGame sbg)
 	{
 		this.p = p;
 		this.gc = gc;
+		this.sbg = sbg;
 		healthBar = new Bar(0,40,250,80,gc);
 		healthBar.text= "Health";
 		hungerBar = new Bar(0,140,250,80,gc);
 		hungerBar.text = "Hunger";
 		Assiette = new Assiette(10,5,5,gc);
+		Dialogs = new ArrayList<Dialog>();
 		
 		InventoryButton = new Button(1620,540,300,100,gc);
 		InventoryButton.BackGroundColor = Color.black;
@@ -51,8 +57,8 @@ private GameContainer gc;
 		UpdateShowUIType(0);
 		
 		addItem(new Item(0,1,"Pomme",null,"L, le sais-tu ? Le dieu de la mort ne mange que des pommes.",10,25));
-		addItem(new Item(1,1,"Patate",null,"Les patates de Sasha Braus.",20,60));
-		addItem(new Item(1,1,"Pêche",null,"La pêche.",15,35));
+		addItem(new Item(0,1,"Patate",null,"Les patates de Sasha Braus.",20,60));
+		addItem(new Item(0,1,"Pêche",null,"La pêche.",15,35));
 		addItem(new Item(0,1,"Salade",null,"C'est vert.",25,30));
 		addItem(new Item(0,1,"Pomme",null,"L, le sais-tu ? Le dieu de la mort ne mange que des pommes.",10,25));
 	}
@@ -79,6 +85,21 @@ private GameContainer gc;
 		
 		g.drawString("Argent : " + Integer.toString(Money) + "$", (int)(UIComponent.width*(0.02)), (int)(UIComponent.top+(UIComponent.height*(0.22))));
 		g.drawString(WindowGame.saveName, (int)(UIComponent.width*(0.495)-g.getFont().getWidth(WindowGame.saveName)/2), (int)(UIComponent.top+(UIComponent.height*(0.4))));
+		
+		for(int i=0;i<Dialogs.size();i++)
+		{
+			Dialogs.get(i).render(g);
+		}
+	}
+	
+	public void TakeMeds(Item it)
+	{
+		p.health = Math.max(0, Math.min(1, p.health+(float)(it.Nutrition/100.0f)));
+	}
+	
+	public void addMoney(int i)
+	{
+		Money += i;
 	}
 	
 	public void addItem(Item i)
@@ -89,8 +110,10 @@ private GameContainer gc;
 	public List<String> Save()
 	{
 		List<String> s = new ArrayList<String>();
-		s.add(0, "Money:"+Integer.toString(Money));
-		s.add(1, "Inventory:"+Inventory.SaveInventory());
+		s.add(0, WindowGame.PrimaryColor.toString());
+		s.add(1, WindowGame.SecondaryColor.toString());
+		s.add(2, "Money:"+Integer.toString(Money));
+		s.add(3, "Inventory:"+Inventory.SaveInventory());
 		return s;
 	}
 	
@@ -117,7 +140,9 @@ Input input = gc.getInput();
 		{
 			if(Assiette.Hover())
 			{
-				p.hunger = Math.max(0,Math.min(1,p.hunger +  (float)(Assiette.bouchee())/100.0f));
+				int bouchee = Assiette.bouchee();
+				if(bouchee < 0) p.health = Math.max(0, Math.min(1, p.health+(float)(bouchee/100.0f)));
+				else p.hunger = Math.max(0,Math.min(1,p.hunger +  (float)(bouchee)/100.0f));
 			}
 			if(InventoryButton.Hover())
 			{
@@ -131,9 +156,25 @@ Input input = gc.getInput();
 			}
 			if(Work.Hover())
 			{
-				
+				sbg.enterState(2);
+			}
+			
+			for(int i=0;i<Dialogs.size();i++)
+			{
+				int tmp = Dialogs.get(i).update();
+				if(tmp != -1) { DialogUpdate(Dialogs.get(i).id,tmp); break; }
 			}
 		}
+	}
+	
+	private void DialogUpdate(int i, int j)
+	{
+		/*switch(i)
+		{
+		case 0: // Ecraser la 
+			
+			break;
+		}*/
 	}
 	
 	public void UpdateShowUIType(int newType)
@@ -259,18 +300,33 @@ class Inventory
 	{
 		for(int i=0;i<Items.size();i++)
 		{
-			if(Items.get(i).name == descriptions.i.name) // Trouvé l'item utilisé
+			if(Items.get(i).name == descriptions.i.name) // Trouvé l'item utilisé dans l'inventaire
 			{
-				
 				Items.get(i).number--;
-				parent.SetAssiette(new Assiette(Items.get(i).Nutrition,5,Items.get(i).duree,gc)); // Utiliser les stats de l'item
-				if(Items.get(i).number < 1)
+				switch(Items.get(i).type)
 				{
-					Items.remove(i);
-					ItemButtons.remove(i);
-					reOrganize(i);
-					return true;
+				case 0:
+					parent.SetAssiette(new Assiette(Items.get(i).Nutrition,5,Items.get(i).duree,gc)); // Utiliser les stats de l'item
+					if(Items.get(i).number < 1)
+					{
+						Items.remove(i);
+						ItemButtons.remove(i);
+						reOrganize(i);
+						return true;
+					}
+					break;
+				case 1:
+					parent.TakeMeds(Items.get(i));
+					if(Items.get(i).number < 1)
+					{
+						Items.remove(i);
+						ItemButtons.remove(i);
+						reOrganize(i);
+						return true;
+					}
+					break;
 				}
+				
 				return false;
 			}
 		}
@@ -334,6 +390,12 @@ class Shop
 		Prices.add(5);
 		Items.add(new Item(0,-1,"Pêche",null,"Le pêche.",15,35));
 		Prices.add(8);
+		Items.add(new Item(0,1,"Patate",null,"Les patates de Sasha Braus.",20,60));
+		Prices.add(10);
+		Items.add(new Item(0,1,"Salade",null,"C'est vert.",25,30));
+		Prices.add(14);
+		Items.add(new Item(1,1,"Aspirine",null,"Pour les lendemains de cuite. -Maman",20,0));
+		Prices.add(10);
 		
 		for(int i=0;i<Items.size();i++)
 		{
@@ -460,9 +522,9 @@ class itemDescription
 		g.setColor(tmp);
 		if(i != null)
 		{
-			g.drawString(i.name, UIComponent.width*x-myFont.getWidth(i.name)/2+w*UIComponent.width/2, y*UIComponent.height+50);
+			g.drawString(i.name, UIComponent.width*x-myFont.getWidth(i.name)/2+w*UIComponent.width/2, y*UIComponent.height+50); //Nom
 			
-			UIComponent.drawText(i.description,myFont,g,(int)(UIComponent.width*this.x),(int)(UIComponent.width*this.y),(int)(UIComponent.width*this.w));
+			UIComponent.drawText(i.description,myFont,g,(int)(UIComponent.width*this.x),(int)(UIComponent.width*this.y),(int)(UIComponent.width*this.w)); //Description
 			
 			if(price == -1)
 			{
@@ -474,6 +536,16 @@ class itemDescription
 				UseButton.text = "Acheter";
 				g.drawString(Integer.toString(price) + "$", UIComponent.width*x-myFont.getWidth(Integer.toString(price) + "$")/2+w*UIComponent.width/2, y*UIComponent.height*2+50);
 			}
+			switch(i.type)
+			{
+			case 0:
+				g.drawString("Nutrition : " + Integer.toString(i.Nutrition), UIComponent.width*x-myFont.getWidth("Nutrition : " + Integer.toString(i.Nutrition))/2+w*UIComponent.width/2, y*UIComponent.height*2);
+				break;
+			case 1:
+				g.drawString("Soins : " + Integer.toString(i.Nutrition), UIComponent.width*x-myFont.getWidth("Soin : " + Integer.toString(i.Nutrition))/2+w*UIComponent.width/2, y*UIComponent.height*2);
+				break;
+			}
+			
 			UseButton.render(g);
 		}
 		g.drawRect(UIComponent.width*x,UIComponent.top+(UIComponent.height*y),UIComponent.width*w,UIComponent.height*h);

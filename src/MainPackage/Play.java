@@ -34,7 +34,7 @@ public class Play extends BasicGameState {
 		IdleGaming = new Animation(IdleSprite,200);
 		this.gc = gc;
 		this.sbg = sbg;
-		hud = new HUD(this,gc);
+		hud = new HUD(this,gc,sbg);
 		
 		timer.schedule(new TimerTask() {
 			  @Override
@@ -52,7 +52,7 @@ public class Play extends BasicGameState {
 	}
 	
 	public void Tick()
-	{ //plus tard appeler la fonction tick dans personnage par exemple
+	{
 		hunger -= 0.001;
 		if(hunger <= 0)
 		{

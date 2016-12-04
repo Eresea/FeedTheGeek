@@ -3,7 +3,8 @@
  */
 package MainPackage;
 
-import java.awt.*;
+import java.awt.Toolkit;
+import java.awt.Dimension;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.io.*;
@@ -23,6 +24,8 @@ public class WindowGame extends StateBasedGame {
 	public static String saveName = "";
 	public static HUD hud = null;
 	public static Save s;
+	public static Color PrimaryColor = Color.black;
+	public static Color SecondaryColor = Color.red;
 	
 	public static File Save()
 	{
@@ -47,6 +50,7 @@ public class WindowGame extends StateBasedGame {
 	private GameContainer container;
 	public static final int MainMenu = 0;
 	public static final int Play = 1;
+	public static final int Work = 2;
 	private static AppGameContainer appgc;
 	
 	public WindowGame()
@@ -54,12 +58,14 @@ public class WindowGame extends StateBasedGame {
 		super("MainPackage :: WindowGame");
 		this.addState(new Menu(MainMenu));
 		this.addState(new Play(Play));
+		this.addState(new Work(Work));
 	}
 	
 	public void initStatesList(GameContainer gc) throws SlickException
 	{
 		this.getState(MainMenu).init(gc, this);
 		this.getState(Play).init(gc, this);
+		this.getState(Work).init(gc, this);
 		this.enterState(MainMenu);
 	}
 	
