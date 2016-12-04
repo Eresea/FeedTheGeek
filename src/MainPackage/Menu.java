@@ -102,7 +102,7 @@ public class Menu extends BasicGameState {
 				if(NewGame.Hover()) changeMenu(3);
 				if(OptionsButton.Hover()) changeMenu(1);
 				if(LoadGame.Hover()) changeMenu(2);
-				if(ExitButton.Hover()) gc.exit();
+				if(ExitButton.Hover()) sbg.closeRequested();
 			}
 			break;
 		case 1:
@@ -113,6 +113,9 @@ public class Menu extends BasicGameState {
 			break;
 		case 3:
 			newGameMenu.update(gc, sbg, delta);
+			break;
+		case 4:
+			//Menu de pause
 			break;
 		}
 	}

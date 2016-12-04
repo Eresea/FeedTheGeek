@@ -3,6 +3,7 @@ package MainPackage;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
+import Utility.Save;
 
 public class NewGameMenu {
 	public String title = "Menu de Chargement";
@@ -111,6 +112,7 @@ public class NewGameMenu {
 					System.out.println(nomTBox.getText());
 					WindowGame.saveName = nomTBox.getText();
 					//WindowGame.Load(WindowGame.Save(/* Elements */)); //Sauvegarde et charge
+					WindowGame.s = new Save("Saves/"+WindowGame.saveName+".sav");
 					sbg.enterState(1);
 				}
 			}

@@ -4,13 +4,16 @@
 package MainPackage;
 
 import java.awt.*;
-import java.io.File;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 import org.lwjgl.*;
 import org.lwjgl.opengl.Display;
+import Utility.Save;
 
 /**
  * @author Eresea
@@ -18,21 +21,27 @@ import org.lwjgl.opengl.Display;
  */
 public class WindowGame extends StateBasedGame {
 	public static String saveName = "";
+	public static HUD hud = null;
+	public static Save s;
 	
 	public static File Save()
 	{
+		s.SaveToFile();
 		
-		System.out.println("test");
 		return null;
 	}
 	
-	public static void Load(File fi)
+	public static boolean Load(File fi)
 	{
 		if(fi.canRead())
 		{
 			System.out.println("Loading " + fi.getName());
+			s = new Save("Saves/"+fi.getName()+".sav");
+			
+			return true;
 		}
-		else System.out.println("Impossible de lire/écrire sur ce fichier.");
+		System.out.println("Impossible de lire/écrire sur ce fichier.");
+		return false;
 	}
 
 	private GameContainer container;
@@ -64,7 +73,6 @@ public class WindowGame extends StateBasedGame {
 	 @Override
 	    public boolean closeRequested()
 	    {
-		 Save();
 	      System.exit(0); // Use this if you want to quit the app.
 	      return false;
 	    }

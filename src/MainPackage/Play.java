@@ -42,6 +42,8 @@ public class Play extends BasicGameState {
 			   Tick();
 			  }
 			}, 200,200);
+		
+		WindowGame.hud = hud;
 	}
 	
 	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException
@@ -107,6 +109,7 @@ public class Play extends BasicGameState {
 			{
 				sbg.closeRequested();
 			}*/
+			WindowGame.Save();
 			sbg.enterState(0);
 		}
 	}

@@ -3,7 +3,7 @@ package MainPackage;
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.TextField;
 import Utility.Item;
-import java.util.ArrayList;
+import java.util.*;
 
 public class HUD {
 private Play p;
@@ -14,7 +14,7 @@ private Button ShopButton;
 private Button Work;
 private int showUIType = 0;
 
-public int Money = 10;
+public static int Money = 10;
 
 private Inventory Inventory;
 private Shop Shop;
@@ -50,11 +50,11 @@ private GameContainer gc;
 		
 		UpdateShowUIType(0);
 		
-		addItem(new Item(0,1,"Pomme",null,"L, le sais-tu ? Le dieu de la mort ne mange que des pommes."));
-		addItem(new Item(1,1,"Patate",null,"Les patates de Sasha Braus."));
-		addItem(new Item(1,1,"Pêche",null,"La pêche."));
-		addItem(new Item(0,1,"Salade",null,"C'est vert."));
-		addItem(new Item(0,1,"Pomme",null,"L, le sais-tu ? Le dieu de la mort ne mange que des pommes."));
+		addItem(new Item(0,1,"Pomme",null,"L, le sais-tu ? Le dieu de la mort ne mange que des pommes.",10,25));
+		addItem(new Item(1,1,"Patate",null,"Les patates de Sasha Braus.",20,60));
+		addItem(new Item(1,1,"Pêche",null,"La pêche.",15,35));
+		addItem(new Item(0,1,"Salade",null,"C'est vert.",25,30));
+		addItem(new Item(0,1,"Pomme",null,"L, le sais-tu ? Le dieu de la mort ne mange que des pommes.",10,25));
 	}
 
 	void render(Graphics g)
@@ -77,12 +77,21 @@ private GameContainer gc;
 			break;
 		}
 		
+		g.drawString("Argent : " + Integer.toString(Money) + "$", (int)(UIComponent.width*(0.02)), (int)(UIComponent.top+(UIComponent.height*(0.22))));
 		g.drawString(WindowGame.saveName, (int)(UIComponent.width*(0.495)-g.getFont().getWidth(WindowGame.saveName)/2), (int)(UIComponent.top+(UIComponent.height*(0.4))));
 	}
 	
 	public void addItem(Item i)
 	{
 		Inventory.AddItem(i);
+	}
+	
+	public List<String> Save()
+	{
+		List<String> s = new ArrayList<String>();
+		s.add(0, "Money:"+Integer.toString(Money));
+		s.add(1, "Inventory:"+Inventory.SaveInventory());
+		return s;
 	}
 	
 	void updateValues(float health, float hunger)
@@ -192,13 +201,23 @@ class Inventory
 		return b;
 	}
 	
+	public String SaveInventory()
+	{
+		String tmp = "";
+		for(int i=0;i<Items.size();i++)
+		{
+			tmp += "["+Items.get(i).Save()+"],";
+		}
+		return "{"+tmp.substring(0, tmp.length()-1)+"}";
+	}
+	
 	public void AddItem(Item i)
 	{
 		for(int j=0;j<Items.size();j++)
 		{
 			if(Items.get(j).name == i.name)
 			{
-				Items.get(j).number++;
+				Items.get(j).number+=i.number;
 				return;
 			}
 		}
@@ -244,7 +263,7 @@ class Inventory
 			{
 				
 				Items.get(i).number--;
-				parent.SetAssiette(new Assiette(10,5,5,gc)); // Utiliser les stats de l'item
+				parent.SetAssiette(new Assiette(Items.get(i).Nutrition,5,Items.get(i).duree,gc)); // Utiliser les stats de l'item
 				if(Items.get(i).number < 1)
 				{
 					Items.remove(i);
@@ -299,6 +318,9 @@ class Shop
 	
 	Shop(HUD parent,GameContainer gc)
 	{
+		this.gc = gc;
+		this.parent = parent;
+		
 		Items = new ArrayList<Item>();
 		Prices = new ArrayList<Integer>();
 		ItemButtons = new ArrayList<Button>();
@@ -308,16 +330,15 @@ class Shop
 		descriptions = new itemDescription(gc,1005,255,430,740,null);
 		xItem = 150;
 		
-		Items.add(new Item(0,-1,"Pomme",null,"L, le sais-tu ? Le dieu de la mort ne mange que des pommes."));
+		Items.add(new Item(0,-1,"Pomme",null,"L, le sais-tu ? Le dieu de la mort ne mange que des pommes.",10,25));
 		Prices.add(5);
+		Items.add(new Item(0,-1,"Pêche",null,"Le pêche.",15,35));
+		Prices.add(8);
 		
 		for(int i=0;i<Items.size();i++)
 		{
-			//ItemButtons.add(createButton(Items.get(i),i)); //STOPPED HERE
+			ItemButtons.add(createButton(Items.get(i),i)); //STOPPED HERE
 		}
-		
-		this.gc = gc;
-		this.parent = parent;
 	}
 	
 	private Button createButton(Item it,int i)
@@ -341,14 +362,14 @@ class Shop
 		return b;
 	}
 	
-	public Item BuyItem(int index)
+	public void BuyItem(Item it, int price)
 	{
-		if(parent.Money >= Prices.get(index))
+		if(parent.Money >= price)
 		{
-			parent.Money -= Prices.get(index);
-			return Items.get(index);
+			parent.Money -= price;
+			it.number = 1;
+			parent.addItem(it);
 		}
-		return null;
 	}
 	
 	public void render(Graphics g)
@@ -368,6 +389,12 @@ class Shop
 		returnButton.render(g);
 	}
 	
+	private void describe(int i)
+	{
+		descriptions.changeItem(Items.get(i));
+		descriptions.price = Prices.get(i);
+	}
+	
 	public void update()
 	{
 		Input input = gc.getInput();
@@ -375,6 +402,15 @@ class Shop
 		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
 		{
 			if(returnButton.Hover()) parent.UpdateShowUIType(0);
+			for(int i=0;i<ItemButtons.size();i++)
+			{
+				if(ItemButtons.get(i).Hover()) describe(i);
+			}
+			
+			if(descriptions.Used())
+			{
+				BuyItem(descriptions.i,descriptions.price);
+			}
 		}
 	}
 }
@@ -431,10 +467,12 @@ class itemDescription
 			if(price == -1)
 			{
 				UseButton.text = "Utiliser";
+				g.drawString("Nombre : " + Integer.toString(i.number), UIComponent.width*x-myFont.getWidth("Nombre : " + Integer.toString(i.number))/2+w*UIComponent.width/2, y*UIComponent.height*2+50);
 			}
 			else
 			{
 				UseButton.text = "Acheter";
+				g.drawString(Integer.toString(price) + "$", UIComponent.width*x-myFont.getWidth(Integer.toString(price) + "$")/2+w*UIComponent.width/2, y*UIComponent.height*2+50);
 			}
 			UseButton.render(g);
 		}
@@ -443,6 +481,14 @@ class itemDescription
 	
 	public boolean Used()
 	{
-		return (UseButton.Hover() && i.number > 0);
+		if(i != null)
+		{
+			if(i.number == -1)
+			{
+				return (UseButton.Hover() && HUD.Money >= price);
+			}
+			return (UseButton.Hover() && i.number > 0);
+		}
+		return false;
 	}
 }
