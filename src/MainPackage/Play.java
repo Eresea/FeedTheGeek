@@ -41,9 +41,6 @@ public class Play extends BasicGameState {
 		IdleGaming = new Animation(FondSprite,200);
 		
 
-		//Chaise
-		ChaiseSprite = new SpriteSheet("resources/chaise.png",128,140);
-		ChaiseAnim = new Animation(ChaiseSprite,200);
 		
 		this.gc = gc;
 		this.sbg = sbg;
@@ -59,19 +56,19 @@ public class Play extends BasicGameState {
 		WindowGame.hud = hud;
 		
 		/* couleur du Tshirt*/
-		if (WindowGame.SecondaryColor==Color.blue)
+		if (WindowGame.PrimaryColor==Color.blue)
 		{
 			  HautSprite = new SpriteSheet("resources/hautBleu.png",128,140);            
 		}
-		else if(WindowGame.SecondaryColor==Color.red)
+		else if(WindowGame.PrimaryColor==Color.red)
 		{
 			  HautSprite = new SpriteSheet("resources/hautRouge.png",128,140);            
 		}		
-		else if(WindowGame.SecondaryColor==Color.green)
+		else if(WindowGame.PrimaryColor==Color.green)
 		{
 			  HautSprite = new SpriteSheet("resources/hautVert.png",128,140);            
 		}
-		else if(WindowGame.SecondaryColor==Color.white)
+		else if(WindowGame.PrimaryColor==Color.white)
 		{
 			  HautSprite = new SpriteSheet("resources/hautBlanc.png",128,140);            
 		}
@@ -80,6 +77,29 @@ public class Play extends BasicGameState {
 			HautSprite = new SpriteSheet("resources/hautRouge.png",128,140);
 		}
 		HautAnim = new Animation(HautSprite,200);
+		
+		/* couleur de la chaise*/
+		if (WindowGame.SecondaryColor==Color.blue)
+		{
+			ChaiseSprite = new SpriteSheet("resources/chaiseBleu.png",128,140);            
+		}
+		else if(WindowGame.SecondaryColor==Color.red)
+		{
+			ChaiseSprite = new SpriteSheet("resources/chaiseRouge.png",128,140);            
+		}		
+		else if(WindowGame.SecondaryColor==Color.green)
+		{
+			ChaiseSprite = new SpriteSheet("resources/chaiseVert.png",128,140);            
+		}
+		else if(WindowGame.SecondaryColor==Color.white)
+		{
+			ChaiseSprite = new SpriteSheet("resources/chaiseBlanc.png",128,140);            
+		}
+		else
+		{
+			ChaiseSprite = new SpriteSheet("resources/chaiseNoir.png",128,140);
+		}
+		ChaiseAnim = new Animation(ChaiseSprite,200);
 
 		
 	}
