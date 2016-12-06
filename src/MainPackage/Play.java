@@ -10,8 +10,15 @@ import org.newdawn.slick.state.*;
 
 public class Play extends BasicGameState {
 	
-	private SpriteSheet IdleSprite;
+	private SpriteSheet FondSprite;
 	private Animation IdleGaming;
+
+	private SpriteSheet HautSprite;
+	private Animation HautAnim;
+	
+	private SpriteSheet ChaiseSprite;
+	private Animation ChaiseAnim;
+	
 	private GameContainer gc;
 	private StateBasedGame sbg;
 	private Color BackgroundColor = new Color(0.74117647058f,0.74117647058f,0.74117647058f);
@@ -30,8 +37,14 @@ public class Play extends BasicGameState {
 	
 	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException
 	{
-		IdleSprite = new SpriteSheet("resources/IdleGaming.png",128,140);
-		IdleGaming = new Animation(IdleSprite,200);
+		FondSprite = new SpriteSheet("resources/fond.png",128,140);
+		IdleGaming = new Animation(FondSprite,200);
+		
+
+		//Chaise
+		ChaiseSprite = new SpriteSheet("resources/chaise.png",128,140);
+		ChaiseAnim = new Animation(ChaiseSprite,200);
+		
 		this.gc = gc;
 		this.sbg = sbg;
 		hud = new HUD(this,gc,sbg);
@@ -44,6 +57,31 @@ public class Play extends BasicGameState {
 			}, 200,200);
 		
 		WindowGame.hud = hud;
+		
+		/* couleur du Tshirt*/
+		if (WindowGame.SecondaryColor==Color.blue)
+		{
+			  HautSprite = new SpriteSheet("resources/hautBleu.png",128,140);            
+		}
+		else if(WindowGame.SecondaryColor==Color.red)
+		{
+			  HautSprite = new SpriteSheet("resources/hautRouge.png",128,140);            
+		}		
+		else if(WindowGame.SecondaryColor==Color.green)
+		{
+			  HautSprite = new SpriteSheet("resources/hautVert.png",128,140);            
+		}
+		else if(WindowGame.SecondaryColor==Color.white)
+		{
+			  HautSprite = new SpriteSheet("resources/hautBlanc.png",128,140);            
+		}
+		else
+		{
+			HautSprite = new SpriteSheet("resources/hautRouge.png",128,140);
+		}
+		HautAnim = new Animation(HautSprite,200);
+
+		
 	}
 	
 	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException
@@ -85,6 +123,14 @@ public class Play extends BasicGameState {
 		IdleGaming.draw(UIComponent.width*(466.5f/1920),UIComponent.top+(UIComponent.height*(0)),UIComponent.width*(987.0f/1920),UIComponent.height*(1));
 		g.setBackground(BackgroundColor);
 		hud.render(g);
+	
+		HautAnim.draw(UIComponent.width*(466.5f/1920),UIComponent.top+(UIComponent.height*(0)),UIComponent.width*(987.0f/1920),UIComponent.height*(1));
+		g.setBackground(BackgroundColor);
+		hud.render(g);
+		
+		ChaiseAnim.draw(UIComponent.width*(466.5f/1920),UIComponent.top+(UIComponent.height*(0)),UIComponent.width*(987.0f/1920),UIComponent.height*(1));
+		g.setBackground(BackgroundColor);
+		hud.render(g);	
 		
 		if(sy < sx) g.scale(sy,sy);
 		else g.scale(sx,sx);
