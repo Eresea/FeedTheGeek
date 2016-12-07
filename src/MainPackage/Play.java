@@ -120,6 +120,7 @@ public class Play extends BasicGameState {
 		hud.updateValues(health, hunger);
 	}
 	
+	
 	public void GameStateUpdate(GameContainer gc, StateBasedGame sbg, int arg0) 
 	{
 		
