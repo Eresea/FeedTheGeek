@@ -2,6 +2,8 @@ package MainPackage;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.*;
+import java.nio.file.*;
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -11,27 +13,40 @@ public class TypingGame {
 	public int points = 0;
 	List<TypingActor> Actors;
 	GameContainer gc;
+	List<String> words;
 
 	public TypingGame(GameContainer gc)
 	{
 		this.gc = gc;
 		Actors = new ArrayList<TypingActor>();
+		//words = new ArrayList<String>
+		
+		File f = new File("dictionary.txt");
+		try{
+			words = Files.readAllLines(f.toPath());
+			} catch(IOException e)
+			{
+				System.out.println(e.getMessage());
+			}
+		words.add("test");
+		
 	}
 	
 	public void Tick()
 	{
 		for(int i=0;i<maxActors;i++)
 		{
+			int randI = RandInRange(0,words.size());
 			if(Actors.size() > i)
 			{
 				if(Actors.get(i).Tick())
 				{
 					Actors.remove(i);
 					points--;
-					Actors.add(new TypingActor("testing",randPos(gc.getDefaultFont(),"testing"),speed,gc));
+					Actors.add(new TypingActor(words.get(randI),randPos(gc.getDefaultFont(),words.get(randI)),speed,gc));
 				}
 			}
-			else Actors.add(new TypingActor("testing",randPos(gc.getDefaultFont(),"testing"),speed,gc));
+			else Actors.add(new TypingActor(words.get(randI),randPos(gc.getDefaultFont(),words.get(randI)),speed,gc));
 		}
 	}
 	
@@ -57,6 +72,11 @@ public class TypingGame {
 		g.drawString("Points : " + points, 0, 0);
 	}
 	
+	private int RandInRange(int min, int max)
+	{
+		return ThreadLocalRandom.current().nextInt(min,max);
+	}
+	
 	private int randPos(Font f,String s)
 	{
 		int w = f.getWidth(s);
@@ -65,7 +85,7 @@ public class TypingGame {
 		int rand = -1;
 		while(rand < 0)
 		{
-			rand = ThreadLocalRandom.current().nextInt(0,gc.getWidth());
+			rand = RandInRange(0,gc.getWidth());
 			for(int i=0;i<Actors.size();i++)
 			{
 				if(Actors.get(i).isAreaUsed(rand, 0, w, h)) rand = -1;

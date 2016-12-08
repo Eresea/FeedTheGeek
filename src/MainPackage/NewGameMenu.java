@@ -5,6 +5,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 import Utility.Save;
 import java.io.*;
+import java.util.Calendar;
+
 import javax.swing.JOptionPane;
 
 public class NewGameMenu {
@@ -115,7 +117,8 @@ public class NewGameMenu {
 					WindowGame.saveName = nomTBox.getText();
 					WindowGame.PrimaryColor = colors[ColorIndex1];
 					WindowGame.SecondaryColor = colors[ColorIndex2];
-					//WindowGame.Load(WindowGame.Save(/* Elements */)); //Sauvegarde et charge
+					WindowGame.readConfig();
+					//WindowGame.Load(WindowGame.Save()); //Sauvegarde et charge
 					File f = new File("Saves/"+WindowGame.saveName+".sav");
 					/*if(f.exists())
 					{
@@ -124,6 +127,7 @@ public class NewGameMenu {
 						System.out.println(option);
 					}*/
 					WindowGame.s = new Save("Saves/"+WindowGame.saveName+".sav");
+					WindowGame.s.lastSave = (int)(Calendar.getInstance().getTime().getTime()/1000);
 					sbg.enterState(1);
 				}
 			}

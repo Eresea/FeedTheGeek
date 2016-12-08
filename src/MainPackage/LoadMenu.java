@@ -71,7 +71,7 @@ public class LoadMenu {
 		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
 		{
 			if(BackButton.Hover()) MainMenu.changeMenu(0);
-			if(LoadButton.Hover()) WindowGame.Load(lS.SelectedFile());
+			if(LoadButton.Hover()) if(WindowGame.Load(lS.SelectedFile())) sbg.enterState(1);
 			lS.update();
 		}
 	}

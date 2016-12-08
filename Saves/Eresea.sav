@@ -1,4 +1,7 @@
-Color (0.0,0.0,1.0,1.0)
-Color (1.0,0.0,0.0,1.0)
-Money:45
-Inventory:{[name:Pomme,type:0,number:2,description:L, le sais-tu ? Le dieu de la mort ne mange que des pommes.,nutrition:10,duree:25],[name:Patate,type:0,number:1,description:Les patates de Sasha Braus.,nutrition:20,duree:60],[name:Pêche,type:0,number:1,description:La pêche.,nutrition:15,duree:35],[name:Salade,type:0,number:1,description:C'est vert.,nutrition:25,duree:30]}
+black
+red
+Money:10
+Inventory:{}
+health:1.0
+hunger:0.96666664
+lastSave:1481218578

@@ -24,7 +24,7 @@ public class Item {
 	
 	public String Save()
 	{
-		return "name:"+name+",type:"+Integer.toString(type)+",number:"+Integer.toString(number)+",description:"+description+",nutrition:"+Integer.toString(Nutrition)+",duree:"+Integer.toString(duree);
+		return "name:"+name+",type:"+Integer.toString(type)+",number:"+Integer.toString(number)+",description:\""+description+"\",nutrition:"+Integer.toString(Nutrition)+",duree:"+Integer.toString(duree);
 	}
 
 }

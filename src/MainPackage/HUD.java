@@ -28,7 +28,7 @@ private GameContainer gc;
 private StateBasedGame sbg;
 
 	HUD(Play p, GameContainer gc,StateBasedGame sbg)
-	{
+	{		
 		this.p = p;
 		this.gc = gc;
 		this.sbg = sbg;
@@ -55,12 +55,6 @@ private StateBasedGame sbg;
 		Shop = new Shop(this, gc);
 		
 		UpdateShowUIType(0);
-		
-		addItem(new Item(0,1,"Pomme",null,"L, le sais-tu ? Le dieu de la mort ne mange que des pommes.",10,25));
-		addItem(new Item(0,1,"Patate",null,"Les patates de Sasha Braus.",20,60));
-		addItem(new Item(0,1,"Pêche",null,"La pêche.",15,35));
-		addItem(new Item(0,1,"Salade",null,"C'est vert.",25,30));
-		addItem(new Item(0,1,"Pomme",null,"L, le sais-tu ? Le dieu de la mort ne mange que des pommes.",10,25));
 	}
 
 	void render(Graphics g)
@@ -92,6 +86,28 @@ private StateBasedGame sbg;
 		}
 	}
 	
+	public void setInventory(String s)
+	{
+		if(s.indexOf(']') > 0)
+		{
+			List<String> items = Arrays.asList(s.split("]"));
+			for(int i=0;i<items.size();i++)
+			{
+				System.out.println(items.size());
+				List<String> vars = Arrays.asList(items.get(i).substring(2).split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"));
+				int type,number,nutri,duree;
+				String name = vars.get(0).substring(5);
+				String description = vars.get(3).substring(13,vars.get(3).length()-1);
+				type = Integer.parseInt(vars.get(1).substring(5));
+				number = Integer.parseInt(vars.get(2).substring(7));
+				nutri = Integer.parseInt(vars.get(4).substring(10));
+				duree = Integer.parseInt(vars.get(5).substring(6));
+				Item it = new Item(type,number,name,null,description,nutri,duree);
+				Inventory.AddItem(it);
+			}
+		}
+	}
+	
 	public void TakeMeds(Item it)
 	{
 		p.health = Math.max(0, Math.min(1, p.health+(float)(it.Nutrition/100.0f)));
@@ -110,11 +126,29 @@ private StateBasedGame sbg;
 	public List<String> Save()
 	{
 		List<String> s = new ArrayList<String>();
-		s.add(0, WindowGame.PrimaryColor.toString());
-		s.add(1, WindowGame.SecondaryColor.toString());
+		s.add(0, ColorToString(WindowGame.PrimaryColor));
+		s.add(1, ColorToString(WindowGame.SecondaryColor));
 		s.add(2, "Money:"+Integer.toString(Money));
 		s.add(3, "Inventory:"+Inventory.SaveInventory());
+		s.add(4, "health:"+p.healthCurrent);
+		s.add(5, "hunger:"+p.hungerCurrent);
 		return s;
+	}
+	
+	private String ColorToString(Color c)
+	{
+		if(c == Color.black) return "black";
+		if(c == Color.blue) return "blue";
+		if(c == Color.green) return "green";
+		if(c == Color.red) return "red";
+		if(c == Color.white) return "white";
+		return "";
+	}
+	
+	public void setHealthHunger(float Health,float Hunger)
+	{
+		p.health = Health;
+		p.hunger = Hunger;
 	}
 	
 	void updateValues(float health, float hunger)
@@ -141,8 +175,8 @@ Input input = gc.getInput();
 			if(Assiette.Hover())
 			{
 				int bouchee = Assiette.bouchee();
-				if(bouchee < 0) p.health = Math.max(0, Math.min(1, p.health+(float)(bouchee/100.0f)));
-				else p.hunger = Math.max(0,Math.min(1,p.hunger +  (float)(bouchee)/100.0f));
+				if(bouchee < 0) p.health = p.health+(float)(bouchee/100.0f);
+				else p.hunger = p.hunger +  (float)(bouchee)/100.0f;
 			}
 			if(InventoryButton.Hover())
 			{
@@ -249,19 +283,20 @@ class Inventory
 		{
 			tmp += "["+Items.get(i).Save()+"],";
 		}
-		return "{"+tmp.substring(0, tmp.length()-1)+"}";
+		return "{"+tmp.substring(0, Math.max(0, tmp.length()-1))+"}";
 	}
 	
 	public void AddItem(Item i)
 	{
 		for(int j=0;j<Items.size();j++)
 		{
-			if(Items.get(j).name == i.name)
+			if(Items.get(j).name.equals(i.name)) // Utiliser .equals ici au lieu de == car String est un objet et comparer un objet à un autre objet vérifie son pointer au lieu du 'contenu'
 			{
 				Items.get(j).number+=i.number;
 				return;
 			}
 		}
+		
 		Items.add(i);
 		ItemButtons.add(createButton(i,-1));
 	}

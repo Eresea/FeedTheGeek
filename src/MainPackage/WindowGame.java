@@ -10,11 +10,16 @@ import java.nio.file.Files;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
+import java.util.TimerTask;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 import org.lwjgl.*;
 import org.lwjgl.opengl.Display;
 import Utility.Save;
+import static java.lang.Math.toIntExact;
 
 /**
  * @author Eresea
@@ -26,6 +31,8 @@ public class WindowGame extends StateBasedGame {
 	public static Save s;
 	public static Color PrimaryColor = Color.black;
 	public static Color SecondaryColor = Color.red;
+	
+	public static int confTimeToDie;
 	
 	public static File Save()
 	{
@@ -39,12 +46,48 @@ public class WindowGame extends StateBasedGame {
 		if(fi.canRead())
 		{
 			System.out.println("Loading " + fi.getName());
-			s = new Save("Saves/"+fi.getName()+".sav");
-			
-			return true;
+			readConfig();
+			s = new Save("Saves/"+fi.getName());
+			return s.LoadData(fi.getName());
 		}
 		System.out.println("Impossible de lire/écrire sur ce fichier.");
 		return false;
+	}
+	
+	public static void Death()
+	{
+		new java.util.Timer().schedule(new java.util.TimerTask() {
+			@Override
+			public void run() {
+					s.delete();
+				}
+			},
+			5000
+		);
+	}
+	
+	public static boolean readConfig()
+	{
+		File f = new File("config.ini");
+		if(f.canRead())
+		{
+			try{
+			List<String> lines = Files.readAllLines(f.toPath());
+			confTimeToDie = Integer.parseInt(lines.get(0));
+			return true;
+			} catch(IOException e)
+			{
+				System.out.println(e.getMessage());
+			}
+			return false;
+		}
+		//else if(!f.exists()) createConfig();
+		else return false;
+	}
+	
+	public static int timePassed()
+	{
+		return (int)(Calendar.getInstance().getTime().getTime()/1000 - s.lastSave);
 	}
 
 	private GameContainer container;

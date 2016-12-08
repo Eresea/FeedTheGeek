@@ -23,6 +23,7 @@ public class Play extends BasicGameState {
 	private StateBasedGame sbg;
 	private Color BackgroundColor = new Color(0.74117647058f,0.74117647058f,0.74117647058f);
 	public float health =1,hunger = 1; // Plus tard sera dans la classe personnage
+	public float healthCurrent, hungerCurrent;
 	float sx=1,sy=1;
 	Timer timer = new Timer();
 	
@@ -40,20 +41,14 @@ public class Play extends BasicGameState {
 		FondSprite = new SpriteSheet("resources/fond.png",128,140);
 		IdleGaming = new Animation(FondSprite,200);
 		
-
-		
-		this.gc = gc;
-		this.sbg = sbg;
-		hud = new HUD(this,gc,sbg);
+		hud.updateValues(health, hunger);
 		
 		timer.schedule(new TimerTask() {
 			  @Override
 			  public void run() {
 			   Tick();
 			  }
-			}, 200,200);
-		
-		WindowGame.hud = hud;
+			}, 1000,1000);
 		
 		/* couleur du Tshirt*/
 		if (WindowGame.PrimaryColor==Color.blue)
@@ -106,18 +101,29 @@ public class Play extends BasicGameState {
 	
 	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException
 	{
-		
+		this.gc = gc;
+		this.sbg = sbg;
+		hud = new HUD(this,gc,sbg);
+		WindowGame.hud = hud;
 	}
 	
 	public void Tick()
 	{
-		hunger -= 0.001;
-		if(hunger <= 0)
+		hungerCurrent = hunger-((float)(WindowGame.timePassed()) / (float)(WindowGame.confTimeToDie));
+		healthCurrent = health;
+		if(hungerCurrent <= 0)
 		{
-			hunger = 0;
-			health -= 0.001;
+			health -= 0.1;
+			//healthCurrent +=  hungerCurrent;
+			hungerCurrent = 0;
+			if(healthCurrent <= 0)
+			{
+				healthCurrent = 0;
+				WindowGame.Death();
+				timer.cancel();
+			}
 		}
-		hud.updateValues(health, hunger);
+		hud.updateValues(Math.min(1,healthCurrent), Math.min(1,hungerCurrent));
 	}
 	
 	
