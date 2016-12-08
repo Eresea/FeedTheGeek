@@ -3,7 +3,7 @@ package MainPackage;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
-public class Bar extends UIComponent{
+public class Bar extends UIComponent{ // Classe d'élément graphique affichant une barre de progression
 public Color backColor = Color.red;
 public Color frontColor = Color.green;
 public String text ="";
@@ -13,15 +13,15 @@ private float value;
 
 Bar(int x,int y, int w, int h,GameContainer gc)
 {
-	super(x,y,w,h,gc);
+	super(x,y,w,h,gc); // Constructeur de UIComponent (parent)
 	myFont = gc.getDefaultFont();
 }
 
-public void setValue ( float f ) {
+public void setValue ( float f ) { // Change la progression  de la barre
 	   value = Math.max(0,Math.min(1,f));
 	} 
 
-public void render(Graphics g)
+public void render(Graphics g) // Affichage de l'élément graphique
 {
 	Color tmp = g.getColor();	
 	

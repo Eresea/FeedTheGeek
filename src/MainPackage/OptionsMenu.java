@@ -32,7 +32,7 @@ public class OptionsMenu {
 	{
 		 
 	}*/
-	private void Resized(GameContainer gc)
+	private void Resized(GameContainer gc) // Fonction permettant de garder l'apparence des éléments interfaces quel que soit la résolution
 	{
 		UIComponent.top = gc.getHeight()-Display.getHeight();
 		UIComponent.width = Display.getWidth();
@@ -41,7 +41,7 @@ public class OptionsMenu {
 		sy = (float)(Display.getHeight())/(float)(gc.getHeight());
 	}
 	
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException // Affichage des éléments graphiques de l'interface
 	{
 		if(Display.wasResized()) Resized(gc);
 		g.drawRect(5, 5+UIComponent.top, UIComponent.width-10, UIComponent.height-10);
@@ -54,7 +54,7 @@ public class OptionsMenu {
 		else g.scale(sx,sx);
 	}
 	
-	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException // Gestion I/O
 	{
 		if(Display.wasResized()) Resized(gc);
 		Input input = gc.getInput();

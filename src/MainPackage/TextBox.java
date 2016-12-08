@@ -24,18 +24,18 @@ public class TextBox extends UIComponent{
 		tField.setBackgroundColor(BackgroundColor);
 	}
 	
-	public void BackGroundColor(Color bgc)
+	public void BackGroundColor(Color bgc) // Setteur de la couleur de fond
 	{
 		BackgroundColor = bgc;
 		tField.setBackgroundColor(BackgroundColor);
 	}
 	
-	public String getText()
+	public String getText() // Retourne le texte contenu
 	{
 		return tField.getText().isEmpty() ? "" : tField.getText();
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics g) // Affichage de l'élément de texte
 	{
 		tField.render(gc, g);
 		if(text != "")
@@ -44,12 +44,12 @@ public class TextBox extends UIComponent{
 		}
 	}
 	
-	public void setFocus(boolean focus)
+	public void setFocus(boolean focus) // Setteur de focus
 	{
 		hasFocus = focus;
 	}
 	
-	public void update(Input input)
+	public void update(Input input) // Gestion de l'I/O
 	{
 		int mouseX = Mouse.getX();
 		int mouseY = gc.getHeight()-Mouse.getY();

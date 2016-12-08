@@ -19,7 +19,7 @@ public class Work extends BasicGameState {
 		
 	}
 	
-	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException
+	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException // Entrée du joueur dans cette classe (State)
 	{
 		miniGame = new TypingGame(gc);
 		this.sbg = sbg;
@@ -31,7 +31,7 @@ public class Work extends BasicGameState {
 			}, 100,100);
 	}
 	
-	public void Tick()
+	public void Tick() // Tick du monde du jeu (Permet d'avancer dans le temps chaque 0.1 seconde.)
 	{
 		miniGame.Tick();
 	}
@@ -46,7 +46,7 @@ public class Work extends BasicGameState {
 		
 	}
 	
-	private void Resized(GameContainer gc)
+	private void Resized(GameContainer gc) // Cette fonction est appelée quand la fenêtre est redimensionnée et permet de garder les éléments d'interface intacts indépendemment de la résolution.
 	{
 		UIComponent.top = gc.getHeight()-Display.getHeight();
 		UIComponent.width = Display.getWidth();
@@ -55,7 +55,7 @@ public class Work extends BasicGameState {
 		sy = (float)(Display.getHeight())/(float)(gc.getHeight());
 	}
 	
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException // Fonction d'affichage des éléments graphiques
 	{
 		//if(Display.wasResized()) Resized(gc);
 		int width = (int)(UIComponent.height*(128.0f/140.0f));
@@ -67,15 +67,10 @@ public class Work extends BasicGameState {
 		miniGame.render(g);
 	}
 	
-	public void keyPressed(int key, char c)
+	public void keyPressed(int key, char c) // Evènement : Touche du clavier
 	{
 		if(key == Input.KEY_ESCAPE)
 		{
-			//Sys.alert("Quitter ?", "ï¿½tes-vous sï¿½r de vouloir quitter");
-			/*if(DialogBox.DialogBox("Quitter","Etes-vous sur de vouloir quitter le jeu ?") == 0)
-			{
-				sbg.closeRequested();
-			}*/
 			WindowGame.hud.addMoney(miniGame.points);
 			WindowGame.Save();
 			sbg.enterState(1);
@@ -84,7 +79,7 @@ public class Work extends BasicGameState {
 		{
 			if(miniGame != null)
 			{
-				miniGame.keyPressed(c);
+				miniGame.keyPressed(c); // Touche pressée pour le mini jeu
 			}
 		}
 	}

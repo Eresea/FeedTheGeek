@@ -39,7 +39,7 @@ public class Menu extends BasicGameState {
 		menu = m;
 	}
 	
-	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException
+	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException // Initialisation de l'objet
 	{
 		myFont = gc.getDefaultFont();
 		NewGame = new Button(660,300,600,140,gc);
@@ -56,7 +56,7 @@ public class Menu extends BasicGameState {
 		newGameMenu = new NewGameMenu(gc,this);
 	}	
 	
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException // Affichage des éléments graphiques
 	{
 		g.setBackground(BackgroundColor);
 		switch(menu)
@@ -92,7 +92,7 @@ public class Menu extends BasicGameState {
 		}
 	}
 	
-	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException // Gestion des entrées / sorties
 	{
 		Input input = gc.getInput();
 		
@@ -122,7 +122,7 @@ public class Menu extends BasicGameState {
 		}
 	}
 	
-	public void keyPressed(int key, char c)
+	public void keyPressed(int key, char c) // Appui d'une touche du clavier
 	{
 		if(key == Input.KEY_ESCAPE)
 		{

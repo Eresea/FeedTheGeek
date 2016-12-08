@@ -8,7 +8,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
 
-public class Play extends BasicGameState {
+public class Play extends BasicGameState { // Classe d'état qui gère le jeu principal avec le personnage
 	
 	private SpriteSheet FondSprite;
 	private Animation IdleGaming;
@@ -36,14 +36,14 @@ public class Play extends BasicGameState {
 		
 	}
 	
-	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException
+	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException // Evènement où on passe à cet état dans le jeu
 	{
 		FondSprite = new SpriteSheet("resources/fond.png",128,140);
 		IdleGaming = new Animation(FondSprite,200);
 		
 		hud.updateValues(health, hunger);
 		
-		timer.schedule(new TimerTask() {
+		timer.schedule(new TimerTask() { // Horloge candencée pour tick toutes les secondes
 			  @Override
 			  public void run() {
 			   Tick();
@@ -99,7 +99,7 @@ public class Play extends BasicGameState {
 		
 	}
 	
-	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException
+	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException // Initialisation de l'objet
 	{
 		this.gc = gc;
 		this.sbg = sbg;
@@ -107,7 +107,7 @@ public class Play extends BasicGameState {
 		WindowGame.hud = hud;
 	}
 	
-	public void Tick()
+	public void Tick() // Tic d'horloge
 	{
 		hungerCurrent = hunger-((float)(WindowGame.timePassed()) / (float)(WindowGame.confTimeToDie));
 		healthCurrent = health;
@@ -132,7 +132,7 @@ public class Play extends BasicGameState {
 		
 	}
 	
-	private void Resized(GameContainer gc)
+	private void Resized(GameContainer gc) // Fonction permettant de garder l'apparence des éléments d'interface quelque soit la résolution
 	{
 		UIComponent.top = gc.getHeight()-Display.getHeight();
 		UIComponent.width = Display.getWidth();
@@ -141,13 +141,13 @@ public class Play extends BasicGameState {
 		sy = (float)(Display.getHeight())/(float)(gc.getHeight());
 	}
 	
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException // Affichage des éléments graphiques
 	{
 		if(Display.wasResized()) Resized(gc);
 		int width = (int)(UIComponent.height*(128.0f/140.0f));
 
 		//IdleGaming.draw(UIComponent.width/2-width/2,UIComponent.top,width,UIComponent.height);  ManiÃ¨re pour afficher avec ratio X/Y
-		IdleGaming.draw(UIComponent.width*(466.5f/1920),UIComponent.top+(UIComponent.height*(0)),UIComponent.width*(987.0f/1920),UIComponent.height*(1));
+		IdleGaming.draw(UIComponent.width*(466.5f/1920),UIComponent.top+(UIComponent.height*(0)),UIComponent.width*(987.0f/1920),UIComponent.height*(1)); // Affichage des éléments du personnage (comme décors)
 		g.setBackground(BackgroundColor);
 		hud.render(g);
 	
@@ -163,13 +163,13 @@ public class Play extends BasicGameState {
 		else g.scale(sx,sx);
 	}
 	
-	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException // Vérifie les intéractions I/O
 	{
 		IdleGaming.update(delta);
 		hud.update();
 	}
 	
-	public void keyPressed(int key, char c)
+	public void keyPressed(int key, char c) // Touche clavier
 	{
 		if(key == Input.KEY_LEFT)
 		{
@@ -187,7 +187,7 @@ public class Play extends BasicGameState {
 		}
 	}
 	
-	public int getID()
+	public int getID() // Retourne l'ID de l'état de jeu
 	{
 		return 1;
 	}

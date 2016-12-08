@@ -38,7 +38,7 @@ public class LoadMenu {
 	{
 		 
 	}*/
-	private void Resized(GameContainer gc)
+	private void Resized(GameContainer gc) // Fonction permettant de garder l'aspect des éléments graphiques quel que soit la résolution
 	{
 		UIComponent.top = gc.getHeight()-Display.getHeight();
 		UIComponent.width = Display.getWidth();
@@ -47,7 +47,7 @@ public class LoadMenu {
 		sy = (float)(Display.getHeight())/(float)(gc.getHeight());
 	}
 	
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException // Affichage des éléments graphiques
 	{
 		if(Display.wasResized()) Resized(gc);
 		g.drawRect(5, 5+UIComponent.top, UIComponent.width-10, UIComponent.height-10);
@@ -63,7 +63,7 @@ public class LoadMenu {
 		else g.scale(sx,sx);
 	}
 	
-	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException // Gestion des entrées / sorties
 	{
 		if(Display.wasResized()) Resized(gc);
 		Input input = gc.getInput();
@@ -77,7 +77,7 @@ public class LoadMenu {
 	}
 }
 
-class SaveDescription
+class SaveDescription // Classe décrivant un fichier de sauvegarde
 {
 	private String name = "";
 	private String Date = "";
@@ -88,14 +88,14 @@ class SaveDescription
 		myFont = gc.getDefaultFont();
 	}
 	
-	public void setDescription(File fi)
+	public void setDescription(File fi) // Setteur du fichier à décrire
 	{
 		name = fi.getName().substring(0,fi.getName().length()-4);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date = sdf.format(fi.lastModified());
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics g) // Affichage de l'élément de descripteur
 	{
 		g.drawString(name, UIComponent.width*(380.0f/1920.0f)-(myFont.getWidth(name)/2), UIComponent.top+(UIComponent.height*(250.0f/1080.0f)));
 		g.drawString(Date, UIComponent.width*(380.0f/1920.0f)-(myFont.getWidth(Date)/2), UIComponent.top+(UIComponent.height*(600.0f/1080.0f)));
@@ -104,7 +104,7 @@ class SaveDescription
 	}
 }
 
-class listSaves
+class listSaves // Classe listant les sauvegardes de parties différentes
 {
 	File[] files;
 	private int indexPage = 1;
@@ -125,8 +125,8 @@ class listSaves
 		this.sD = sD;
 		SaveButtons = new ArrayList<Button>();
 		
-		File f = new File(System.getProperty("user.dir") + "\\Saves");
-		files = f.listFiles(new FilenameFilter() {
+		File f = new File(System.getProperty("user.dir") + "\\Saves"); 
+		files = f.listFiles(new FilenameFilter() { // Récupère la liste de fichiers terminants par l'extension .sav dans le dossier Saves/
 		    @Override
 		    public boolean accept(File dir, String name) {
 		        return name.endsWith(".sav");
@@ -142,7 +142,7 @@ class listSaves
 		}
 		
 		
-		nbPages = (int)Math.ceil((float)(files.length)/10.0f);
+		nbPages = (int)Math.ceil((float)(files.length)/10.0f); // Définition du nombre de pages de listes
 		
 		Current = new Button(1260,845,50,50,gc);
 		Current.text = Integer.toString(indexPage);
@@ -154,7 +154,7 @@ class listSaves
 		if(nbPages <= indexPage) Higher.visible = false;
 	}
 	
-	private void changePage(int index)
+	private void changePage(int index) // Change l'index de la page et rafraîchit la liste des sauvegardes
 	{
 		indexPage = index;
 		if(index == 1)Lower.visible = false;
@@ -172,7 +172,7 @@ class listSaves
 		}
 	}
 	
-	private void updateDescription(int index)
+	private void updateDescription(int index) // Met à jour la description par rapport à l'index de fichier sélectionné
 	{
 		if(selectedIndex != -1)SaveButtons.get(selectedIndex%10).BackGroundColor = Color.gray;
 		selectedIndex = index+(indexPage-1)*10;
@@ -180,7 +180,7 @@ class listSaves
 		sD.setDescription(files[selectedIndex]);
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics g) // Affichage de la liste graphique
 	{
 		g.drawRect(UIComponent.width*(750.0f/1920.0f), UIComponent.top+(UIComponent.height*(110.0f/1080.0f)), UIComponent.width*(1070.0f/1920.0f), UIComponent.height*(720.0f/1080.0f));
 		
@@ -197,12 +197,12 @@ class listSaves
 		}
 	}
 	
-	public File SelectedFile()
+	public File SelectedFile() // Retourne le fichier sélectionné
 	{
 		return files[selectedIndex];
 	}
 	
-	public void update()
+	public void update() // Gestion des intéractions I/O
 	{
 		if(Higher.Hover())
 		{

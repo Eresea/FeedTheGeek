@@ -7,7 +7,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
-public class CheckBox extends UIComponent{
+public class CheckBox extends UIComponent{ // Classe d'élément graphique affichant une case à cocher
 	
 public boolean checked = false;
 public String text;
@@ -19,7 +19,7 @@ public CheckBox(int x, int y, int size, GameContainer gc)
 	myFont = gc.getDefaultFont();
 }
 
-public void render(Graphics g)
+public void render(Graphics g) // Affichage graphique
 {
 	
 	g.drawRect(width*x,top+(height*y),w*gc.getWidth(),gc.getHeight()*h);
@@ -32,7 +32,7 @@ public void render(Graphics g)
 	}
 }
 
-public boolean Hover()
+public boolean Hover() // Retourne vrai si l'élément est actuellement survolé
 {
 	if(visible)
 	{

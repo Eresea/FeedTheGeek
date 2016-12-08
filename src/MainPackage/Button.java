@@ -4,7 +4,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
 
-public class Button extends UIComponent{
+public class Button extends UIComponent{ // Classe d'élément graphique de bouton
 
 	public int type = 0;
 	public String text ="";
@@ -20,15 +20,7 @@ public class Button extends UIComponent{
 		myFont = gc.getDefaultFont();
 	}
 	
-	public void ReSet(int x,int y, int w, int h)
-	{
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
-	}
-	
-	public void render(Graphics g)
+	public void render(Graphics g) // Affichage de l'élément à l'écran
 	{		
 		if(visible)
 		{
@@ -53,7 +45,7 @@ public class Button extends UIComponent{
 		}
 	}
 	
-	public boolean Hover()
+	public boolean Hover() // Retourne vrai si l'élément était visible et survolé
 	{
 		
 		if(visible)

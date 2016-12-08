@@ -52,7 +52,7 @@ public class NewGameMenu {
 		HigherColorIndex2.text = ">";
 	}
 	
-	private void Resized(GameContainer gc)
+	private void Resized(GameContainer gc) // Fonction permettant de garder l'apparence des éléments interface quel que soit la résolution
 	{
 		UIComponent.top = gc.getHeight()-Display.getHeight();
 		UIComponent.width = Display.getWidth();
@@ -61,7 +61,7 @@ public class NewGameMenu {
 		sy = (float)(Display.getHeight())/(float)(gc.getHeight());
 	}
 	
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException // Affichage des éléments graphiques
 	{
 		if(Display.wasResized()) Resized(gc);
 		g.drawRect(5, 5+UIComponent.top, UIComponent.width-10, UIComponent.height-10);
@@ -92,7 +92,7 @@ public class NewGameMenu {
 		else g.scale(sx,sx);
 	}
 	
-	private void changedColorIndex()
+	private void changedColorIndex() // Appelée quand l'index de couleur choisie a été changé
 	{
 		LowerColorIndex1.visible = !(ColorIndex1 == 0);
 		LowerColorIndex2.visible = !(ColorIndex2 == 0);
@@ -100,7 +100,7 @@ public class NewGameMenu {
 		HigherColorIndex2.visible = !(ColorIndex2 == 4);
 	}
 	
-	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException // Gestion d'entrée/sortie
 	{
 		if(Display.wasResized()) Resized(gc);
 		Input input = gc.getInput();

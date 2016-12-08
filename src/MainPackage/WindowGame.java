@@ -34,14 +34,12 @@ public class WindowGame extends StateBasedGame {
 	
 	public static int confTimeToDie;
 	
-	public static File Save()
+	public static void Save() // Appelle la sauvegarde du jeu actuel
 	{
 		s.SaveToFile();
-		
-		return null;
 	}
 	
-	public static boolean Load(File fi)
+	public static boolean Load(File fi) // Charge une partie à partir d'un fichier
 	{
 		if(fi.canRead())
 		{
@@ -54,7 +52,7 @@ public class WindowGame extends StateBasedGame {
 		return false;
 	}
 	
-	public static void Death()
+	public static void Death() // Mort du personnage
 	{
 		new java.util.Timer().schedule(new java.util.TimerTask() {
 			@Override
@@ -66,7 +64,7 @@ public class WindowGame extends StateBasedGame {
 		);
 	}
 	
-	public static boolean readConfig()
+	public static boolean readConfig() // Lit le fichier config et attribue ses valeurs
 	{
 		File f = new File("config.ini");
 		if(f.canRead())
@@ -85,26 +83,26 @@ public class WindowGame extends StateBasedGame {
 		else return false;
 	}
 	
-	public static int timePassed()
+	public static int timePassed() // Retourne le temps passé entre la sauvegarde et le temps actuel
 	{
 		return (int)(Calendar.getInstance().getTime().getTime()/1000 - s.lastSave);
 	}
-
+	/* Initialisation du jeu */
 	private GameContainer container;
 	public static final int MainMenu = 0;
 	public static final int Play = 1;
 	public static final int Work = 2;
 	private static AppGameContainer appgc;
 	
-	public WindowGame()
+	public WindowGame() // Cette classe ajoute les différents états du programme et initialise l'objet WindowGame
 	{
-		super("MainPackage :: WindowGame");
+		super("Feed The Geek");
 		this.addState(new Menu(MainMenu));
 		this.addState(new Play(Play));
 		this.addState(new Work(Work));
 	}
 	
-	public void initStatesList(GameContainer gc) throws SlickException
+	public void initStatesList(GameContainer gc) throws SlickException // Initialise les classes d'états (BasicGameState)
 	{
 		this.getState(MainMenu).init(gc, this);
 		this.getState(Play).init(gc, this);
@@ -112,16 +110,10 @@ public class WindowGame extends StateBasedGame {
 		this.enterState(MainMenu);
 	}
 	
-	 /*@Override
-	    public void keyReleased(int key, char c) {
-	        if (Input.KEY_ESCAPE == key) {
-	        	container.exit();
-	        }
-	 }*/
-	
 	 @Override
-	    public boolean closeRequested()
+	    public boolean closeRequested() // L'application reçoit un signal pour fermer
 	    {
+		 if(s != null) s.SaveToFile();
 	      System.exit(0); // Use this if you want to quit the app.
 	      return false;
 	    }
@@ -134,6 +126,6 @@ public class WindowGame extends StateBasedGame {
 		 appgc = new AppGameContainer(new WindowGame(),scrnsize.width,scrnsize.height,true);
 		 appgc.setVSync(true);
 		 appgc.setTitle("Feed the Geek");
-		 appgc.start();
+		 appgc.start(); // Commence la partie dans l'état Menu
 	 	}
 }

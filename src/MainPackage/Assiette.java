@@ -5,7 +5,7 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 
 
-public class Assiette extends UIComponent{
+public class Assiette extends UIComponent{ // Classe d'élément graphique affichant l'assiette dans le jeu
 	public float value = 1; //0-1
 	public Color foodColor = Color.yellow;
 	private int nutrition;
@@ -24,7 +24,7 @@ public class Assiette extends UIComponent{
 		dateCreation = Calendar.getInstance();
 	}
 	
-	public int bouchee()
+	public int bouchee() // Fonction retournant la valeur nutritionelle d'une bouchée de l'objet et réduit la quantité de nouriture de l'objet
 	{
 		if(value > 0)
 		{
@@ -36,13 +36,13 @@ public class Assiette extends UIComponent{
 		return 0;
 	}
 	
-	private int calculNutrition()
+	private int calculNutrition() // Retourne la valeur nutritionelle actuelle de la nourriture dans l'assiette
 	{
 		if(perime()) return(-poison);
 		return nutrition;
 	}
 	
-	private boolean perime()
+	private boolean perime() // Retourne vrai si le produit a dépassé sa date de péremption
 	{
 		dateCreation.add(Calendar.SECOND, durabilite);
 		if(Calendar.getInstance().after(dateCreation))
@@ -54,7 +54,7 @@ public class Assiette extends UIComponent{
 		return false;
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics g) // Affichage de l'élément graphique
 	{
 		Color tmp = g.getColor();
 		if(perime()) g.setColor(Color.green);
@@ -65,7 +65,7 @@ public class Assiette extends UIComponent{
 		g.fillRect(width*x,top+(height*y),width*(100.0f/1920),height*(25.0f/1080));
 	}
 	
-	public boolean Hover()
+	public boolean Hover() // Retourne vrai si l'élément est actuellement survolé par la souris
 	{
 			gc.getInput();
 			int mouseX = Mouse.getX();

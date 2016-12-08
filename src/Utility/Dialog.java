@@ -35,7 +35,7 @@ public class Dialog {
 		}
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics g) // Affichage de l'instance
 	{
 		g.fillRect(UIComponent.width*x, UIComponent.top+(UIComponent.height*y), UIComponent.width*w, UIComponent.height*h);
 		for(int i=0;i<Buttons.size();i++)
@@ -44,7 +44,7 @@ public class Dialog {
 		}
 	}
 	
-	public int update()
+	public int update() // Fonction de vérification d'I/O
 	{
 		for(int i=0;i<Buttons.size();i++)
 		{

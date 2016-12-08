@@ -15,7 +15,7 @@ public class TypingGame {
 	GameContainer gc;
 	List<String> words;
 
-	public TypingGame(GameContainer gc)
+	public TypingGame(GameContainer gc) // Mini jeu où il faut taper les mots s'affichant à l'écran avant qu'ils n'atteignent le bas de l'écran
 	{
 		this.gc = gc;
 		Actors = new ArrayList<TypingActor>();
@@ -32,7 +32,7 @@ public class TypingGame {
 		
 	}
 	
-	public void Tick()
+	public void Tick() // Tic de l'horloge
 	{
 		for(int i=0;i<maxActors;i++)
 		{
@@ -50,7 +50,7 @@ public class TypingGame {
 		}
 	}
 	
-	public void keyPressed(char c)
+	public void keyPressed(char c) // Evènement de touche du clavier
 	{
 		for(int i=0;i<Actors.size();i++)
 		{
@@ -62,9 +62,9 @@ public class TypingGame {
 		}
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics g) // Affichage du jeu
 	{
-		for(int i=0;i<Actors.size();i++)
+		for(int i=0;i<Actors.size();i++) // Affichage des différents mots
 		{
 			Actors.get(i).render(g);
 		}
@@ -72,12 +72,12 @@ public class TypingGame {
 		g.drawString("Points : " + points, 0, 0);
 	}
 	
-	private int RandInRange(int min, int max)
+	private int RandInRange(int min, int max) // Renvoi un entier aléatoire entre min et max 
 	{
 		return ThreadLocalRandom.current().nextInt(min,max);
 	}
 	
-	private int randPos(Font f,String s)
+	private int randPos(Font f,String s) // Renvoi une position aléatoire pour la largeur de l'écran
 	{
 		int w = f.getWidth(s);
 		int h = f.getHeight(s);
@@ -95,7 +95,7 @@ public class TypingGame {
 	}
 }
 
-class TypingActor {
+class TypingActor { // Mot qui s'affiche à taper pour gagner des points
 	private String word = "";
 	private String typedWord = "";
 	
@@ -118,18 +118,18 @@ class TypingActor {
 		myFont = gc.getDefaultFont();
 	}
 	
-	public boolean Tick()
+	public boolean Tick() // Déplace le personnage et renvoi vrai s'il dépasse de l'écran en Y
 	{
 		y += speed;
 		return y > maxY;
 	}
 	
-	public boolean isAreaUsed(int x,int y,int w,int h)
+	public boolean isAreaUsed(int x,int y,int w,int h) // Permettra de déterminer si le point fourni est occupé par l'objet
 	{
 		return false; // To finish
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics g) // Affichage de l'élément
 	{
 		Color tmp = g.getColor();
 		g.setColor(BackgroundColor);
@@ -141,7 +141,7 @@ class TypingActor {
 		g.setColor(tmp);
 	}
 	
-	public boolean typed(char c)
+	public boolean typed(char c) // Vérifie si la touche tapée est dans la continuité du mot
 	{
 		if(word.charAt(typedWord.length()) == c)
 		{

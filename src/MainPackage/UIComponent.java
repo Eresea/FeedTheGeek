@@ -3,7 +3,7 @@ package MainPackage;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 
-public class UIComponent {
+public class UIComponent { // Classe parente permettant de simplifier l'utilisation des éléments d'interface
 
 	public static float left,top,width,height;
 	protected float x,y,w,h;
@@ -43,7 +43,7 @@ public class UIComponent {
 		return false;
 	}
 	
-	public static void drawText(String text, Font f, Graphics g,int x,int y,int w)
+	public static void drawText(String text, Font f, Graphics g,int x,int y,int w) // Affiche du texte pour une largeur donnée (auto-wrap)
 	{
 		int j = 0;
 	    String words[] = text.split(" ");

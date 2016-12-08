@@ -16,19 +16,19 @@ public int lastSave;
 
 private List<String> lines;
 
-public Save(String url)
+public Save(String url) // Constructor
 {
 	name = url.substring(url.lastIndexOf("/") + 1);
 	name = name.substring(0,name.length()-4);
 }
 
-public void delete()
+public void delete() // Supprime la sauvegarde concernée
 {
 	File f = new File("Saves/"+name+".sav");
 	f.delete();
 }
 
-public boolean LoadData(String url)
+public boolean LoadData(String url) // Charge les données de l'url dans la partie
 {
 	name = url.substring(url.lastIndexOf("/") + 1);
 	name = name.substring(0,name.length()-4);
@@ -54,7 +54,7 @@ public boolean LoadData(String url)
 	return false;
 }
 
-private Color StringToColor(String s)
+private Color StringToColor(String s) // Converti un string définissant une couleur vers une couleur
 {
 	switch(s)
 	{
@@ -72,22 +72,7 @@ private Color StringToColor(String s)
 	return null;
 }
 
-private void process(String key,String value)
-{
-	switch(key)
-	{
-	case "Money":
-		money = Integer.parseInt(value);
-		break;
-	}
-}
-
-private void UpdateValue(String key, String value)
-{
-	
-}
-
-private List<String> setValues(List<String> l)
+private List<String> setValues(List<String> l) // Setteur de valeurs 
 {
 	List<String> Hud = WindowGame.hud.Save();
 	for(int i=0;i<Hud.size();i++)
@@ -98,7 +83,7 @@ private List<String> setValues(List<String> l)
 	return l;
 }
 
-public void SaveToFile()
+public void SaveToFile() // Sauvegarde les données de la partie
 {
 	String url = "Saves/"+name+".sav";
 	

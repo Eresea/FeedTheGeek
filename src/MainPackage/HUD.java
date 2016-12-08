@@ -27,7 +27,7 @@ private Assiette Assiette;
 private GameContainer gc;
 private StateBasedGame sbg;
 
-	HUD(Play p, GameContainer gc,StateBasedGame sbg)
+	HUD(Play p, GameContainer gc,StateBasedGame sbg) // Classe gérant les affichage d'interface conçernant la fenêtre principale de jeu
 	{		
 		this.p = p;
 		this.gc = gc;
@@ -57,17 +57,18 @@ private StateBasedGame sbg;
 		UpdateShowUIType(0);
 	}
 
-	void render(Graphics g)
+	void render(Graphics g) // Affichage des éléments d'interface
 	{		
+		/* Barres de vie et faim ainsi que les boutons d'intéractions */
 		healthBar.render(g);
 		hungerBar.render(g);
 		InventoryButton.render(g);
 		ShopButton.render(g);
 		Work.render(g);
 		
-		Assiette.render(g);
+		Assiette.render(g); // Affichage de l'élément Assiette
 		
-		switch(showUIType)
+		switch(showUIType) // En fonction de l'état de l'interface (0: Normal, 1: Inventaire affiché, 2: Magasin affiché)
 		{
 		case 1:
 			Inventory.render(g);
@@ -77,8 +78,8 @@ private StateBasedGame sbg;
 			break;
 		}
 		
-		g.drawString("Argent : " + Integer.toString(Money) + "$", (int)(UIComponent.width*(0.02)), (int)(UIComponent.top+(UIComponent.height*(0.22))));
-		g.drawString(WindowGame.saveName, (int)(UIComponent.width*(0.495)-g.getFont().getWidth(WindowGame.saveName)/2), (int)(UIComponent.top+(UIComponent.height*(0.4))));
+		g.drawString("Argent : " + Integer.toString(Money) + "$", (int)(UIComponent.width*(0.02)), (int)(UIComponent.top+(UIComponent.height*(0.22)))); // Affiche le compte d'argent actuel
+		g.drawString(WindowGame.saveName, (int)(UIComponent.width*(0.495)-g.getFont().getWidth(WindowGame.saveName)/2), (int)(UIComponent.top+(UIComponent.height*(0.4)))); // Affiche le nom du personnage
 		
 		for(int i=0;i<Dialogs.size();i++)
 		{
@@ -86,7 +87,7 @@ private StateBasedGame sbg;
 		}
 	}
 	
-	public void setInventory(String s)
+	public void setInventory(String s) // Setteur d'inventaire à partir des éléments parsés (Chargement à partir d'un fichier)
 	{
 		if(s.indexOf(']') > 0)
 		{
@@ -94,7 +95,7 @@ private StateBasedGame sbg;
 			for(int i=0;i<items.size();i++)
 			{
 				System.out.println(items.size());
-				List<String> vars = Arrays.asList(items.get(i).substring(2).split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"));
+				List<String> vars = Arrays.asList(items.get(i).substring(2).split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")); // Différentes valeurs d'un objet Item
 				int type,number,nutri,duree;
 				String name = vars.get(0).substring(5);
 				String description = vars.get(3).substring(13,vars.get(3).length()-1);
@@ -102,28 +103,29 @@ private StateBasedGame sbg;
 				number = Integer.parseInt(vars.get(2).substring(7));
 				nutri = Integer.parseInt(vars.get(4).substring(10));
 				duree = Integer.parseInt(vars.get(5).substring(6));
+				
 				Item it = new Item(type,number,name,null,description,nutri,duree);
 				Inventory.AddItem(it);
 			}
 		}
 	}
 	
-	public void TakeMeds(Item it)
+	public void TakeMeds(Item it) // Utilisation de médicament
 	{
 		p.health = Math.max(0, Math.min(1, p.health+(float)(it.Nutrition/100.0f)));
 	}
 	
-	public void addMoney(int i)
+	public void addMoney(int i) // Ajoute une somme d'argent
 	{
 		Money += i;
 	}
 	
-	public void addItem(Item i)
+	public void addItem(Item i) // Ajoute un objet Item à l'inventaire
 	{
 		Inventory.AddItem(i);
 	}
 	
-	public List<String> Save()
+	public List<String> Save() // Retourne une liste de lignes à sauvegardé conçernant l'interface et l'inventaire en général
 	{
 		List<String> s = new ArrayList<String>();
 		s.add(0, ColorToString(WindowGame.PrimaryColor));
@@ -135,7 +137,7 @@ private StateBasedGame sbg;
 		return s;
 	}
 	
-	private String ColorToString(Color c)
+	private String ColorToString(Color c) // Converti un objet Couleur en un string pour parsé dans un fichier de sauvegarde
 	{
 		if(c == Color.black) return "black";
 		if(c == Color.blue) return "blue";
@@ -145,19 +147,19 @@ private StateBasedGame sbg;
 		return "";
 	}
 	
-	public void setHealthHunger(float Health,float Hunger)
+	public void setHealthHunger(float Health,float Hunger) // Setteur de point de vie et de faim
 	{
 		p.health = Health;
 		p.hunger = Hunger;
 	}
 	
-	void updateValues(float health, float hunger)
+	void updateValues(float health, float hunger) // Met à jour les valeurs de faim et de vie dans les barres de l'interface
 	{
 		healthBar.setValue(health);
 		hungerBar.setValue(hunger);
 	}
 
-	void update()
+	void update() // Gestion de l'intéraction entrée / sortie
 	{
 		switch(showUIType)
 		{
@@ -201,7 +203,7 @@ Input input = gc.getInput();
 		}
 	}
 	
-	private void DialogUpdate(int i, int j)
+	private void DialogUpdate(int i, int j) // Placeholder
 	{
 		/*switch(i)
 		{
@@ -211,23 +213,23 @@ Input input = gc.getInput();
 		}*/
 	}
 	
-	public void UpdateShowUIType(int newType)
+	public void UpdateShowUIType(int newType) // Change l'état de l'affichage de l'interface (Normal/Inventaire/Magasin)
 	{
 		showUIType = newType;
 		InventoryButton.visible = true;
 		ShopButton.visible = true;
 	}
 	
-	public void SetAssiette(Assiette a)
+	public void SetAssiette(Assiette a) // Setteur de l'assiette
 	{
 		Assiette = a;
 	}
 }
 
-class Inventory
+class Inventory // Classe d'inventaire (à la foi de donnée et d'interface)
 {
-	private ArrayList<Item> Items;
-	private ArrayList<Button> ItemButtons;
+	private ArrayList<Item> Items; // Liste des objets contenus
+	private ArrayList<Button> ItemButtons; // Liste des boutons pour chaque objet différents
 	private Button returnButton;
 	private HUD parent;
 	private GameContainer gc;
@@ -255,7 +257,7 @@ class Inventory
 		this.parent = parent;
 	}
 	
-	private Button createButton(Item it,int i)
+	private Button createButton(Item it,int i) // Création d'un bouton pour un objet d'inventaire défini
 	{
 		if(i==-1) i = ItemButtons.size();
 		int x = (int)(1440+((xItem*(i%3))));
@@ -276,7 +278,7 @@ class Inventory
 		return b;
 	}
 	
-	public String SaveInventory()
+	public String SaveInventory() // Retourne la liste des objets de l'inventaire sous forme de texte parsé pour la sauvegarde
 	{
 		String tmp = "";
 		for(int i=0;i<Items.size();i++)
@@ -286,7 +288,7 @@ class Inventory
 		return "{"+tmp.substring(0, Math.max(0, tmp.length()-1))+"}";
 	}
 	
-	public void AddItem(Item i)
+	public void AddItem(Item i) // Ajoute un objet à l'inventaire
 	{
 		for(int j=0;j<Items.size();j++)
 		{
@@ -301,7 +303,7 @@ class Inventory
 		ItemButtons.add(createButton(i,-1));
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics g) // Affichage des éléments graphiques de l'inventaire
 	{
 		Color tmp = g.getColor();
 		g.setColor(Color.gray);
@@ -318,12 +320,12 @@ class Inventory
 		returnButton.render(g);
 	}
 	
-	private void describe(int i)
+	private void describe(int i) // Change l'index de l'objet décrit dans le panneau de description
 	{
 		descriptions.changeItem(Items.get(i));
 	}
 	
-	private void reOrganize(int i)
+	private void reOrganize(int i) // Réorganise l'affichage après suppression d'un élément Button
 	{
 		for(int j=i;j<ItemButtons.size();j++)
 		{
@@ -331,7 +333,7 @@ class Inventory
 		}
 	}
 	
-	private boolean useItem()
+	private boolean useItem() // Utilise un objet de l'inventaire
 	{
 		for(int i=0;i<Items.size();i++)
 		{
@@ -368,7 +370,7 @@ class Inventory
 		return false;
 	}
 	
-	public void update()
+	public void update() // Gestion des entrées / sortie souris
 	{
 		Input input = gc.getInput();
 		
@@ -396,7 +398,7 @@ class Inventory
 	}
 }
 
-class Shop
+class Shop // Classe gérant le magasin du jeu
 {
 	private ArrayList<Item> Items;
 	private ArrayList<Integer> Prices;
@@ -438,7 +440,7 @@ class Shop
 		}
 	}
 	
-	private Button createButton(Item it,int i)
+	private Button createButton(Item it,int i) // Ajoute un bouton pour un objet dans le magasin
 	{
 		if(i==-1) i = ItemButtons.size();
 		int x = (int)(1440+((xItem*(i%3))));
@@ -459,7 +461,7 @@ class Shop
 		return b;
 	}
 	
-	public void BuyItem(Item it, int price)
+	public void BuyItem(Item it, int price) // Achat un objet
 	{
 		if(parent.Money >= price)
 		{
@@ -469,7 +471,7 @@ class Shop
 		}
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics g) // Affichage des éléments graphiques
 	{
 		Color tmp = g.getColor();
 		g.setColor(Color.gray);
@@ -486,13 +488,13 @@ class Shop
 		returnButton.render(g);
 	}
 	
-	private void describe(int i)
+	private void describe(int i) // Change l'index de l'objet décrit dans le panneau de description
 	{
 		descriptions.changeItem(Items.get(i));
 		descriptions.price = Prices.get(i);
 	}
 	
-	public void update()
+	public void update() // Gestion des entrées sortie à la souris (clics)
 	{
 		Input input = gc.getInput();
 		
@@ -512,7 +514,7 @@ class Shop
 	}
 }
 
-class itemDescription
+class itemDescription // Classe de descripteur d'objet (Item)
 {
 	private GameContainer gc;
 	private float x,y,w,h;
@@ -521,7 +523,7 @@ class itemDescription
 	private TextField description;
 	private Button UseButton;
 	
-	public Item i;
+	public Item i; // Objet décrit
 	
 	public int price = -1;
 	// Arrêté ici
@@ -539,17 +541,17 @@ class itemDescription
 		
 	}
 	
-	public void clear()
+	public void clear() // Mise à zéro de la description d'item
 	{
 		i = null;
 	}
 	
-	public void changeItem(Item i)
+	public void changeItem(Item i) // Change l'objet décrit par un nouvel objet
 	{
 		this.i = i;
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics g) // Affichage des éléments graphiques
 	{
 		Color tmp = g.getColor();
 		g.setColor(Color.darkGray);
@@ -586,7 +588,7 @@ class itemDescription
 		g.drawRect(UIComponent.width*x,UIComponent.top+(UIComponent.height*y),UIComponent.width*w,UIComponent.height*h);
 	}
 	
-	public boolean Used()
+	public boolean Used() // Retourne vrai si l'objet vient d'être cliqué pour utilisation/achat
 	{
 		if(i != null)
 		{
