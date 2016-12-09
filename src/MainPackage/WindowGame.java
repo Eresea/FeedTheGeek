@@ -33,6 +33,7 @@ public class WindowGame extends StateBasedGame {
 	public static Color SecondaryColor = Color.red;
 	
 	public static int confTimeToDie;
+	public boolean dead = false;
 	
 	public static void Save() // Appelle la sauvegarde du jeu actuel
 	{
@@ -52,16 +53,11 @@ public class WindowGame extends StateBasedGame {
 		return false;
 	}
 	
-	public static void Death() // Mort du personnage
+	public void Death() // Mort du personnage
 	{
-		new java.util.Timer().schedule(new java.util.TimerTask() {
-			@Override
-			public void run() {
-					s.delete();
-				}
-			},
-			5000
-		);
+		dead = true;
+		enterState(0);
+		s.delete();
 	}
 	
 	public static boolean readConfig() // Lit le fichier config et attribue ses valeurs

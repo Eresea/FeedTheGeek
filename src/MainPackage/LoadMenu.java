@@ -4,7 +4,7 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 import org.newdawn.slick.font.*;
-import org.newdawn.slick.GameContainer;
+
 import java.util.ArrayList;
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -34,6 +34,11 @@ public class LoadMenu {
 		
 	}
 	
+	public void reset()
+	{
+		lS.reset();
+		sD.reset();
+	}
 	/*public void GameStateUpdate(GameContainer gc, StateBasedGame sbg, int arg0) 
 	{
 		 
@@ -88,6 +93,12 @@ class SaveDescription // Classe décrivant un fichier de sauvegarde
 		myFont = gc.getDefaultFont();
 	}
 	
+	public void reset()
+	{
+		name = "";
+		Date = "";
+	}
+	
 	public void setDescription(File fi) // Setteur du fichier à décrire
 	{
 		name = fi.getName().substring(0,fi.getName().length()-4);
@@ -125,6 +136,16 @@ class listSaves // Classe listant les sauvegardes de parties différentes
 		this.sD = sD;
 		SaveButtons = new ArrayList<Button>();
 		
+		reset();
+		
+	}
+	
+	public void reset()
+	{
+		System.out.print("RESET");
+		SaveButtons.clear();
+		
+		
 		File f = new File(System.getProperty("user.dir") + "\\Saves"); 
 		files = f.listFiles(new FilenameFilter() { // Récupère la liste de fichiers terminants par l'extension .sav dans le dossier Saves/
 		    @Override
@@ -140,7 +161,6 @@ class listSaves // Classe listant les sauvegardes de parties différentes
 			b.BackGroundColor = Color.gray;
 			SaveButtons.add(b);
 		}
-		
 		
 		nbPages = (int)Math.ceil((float)(files.length)/10.0f); // Définition du nombre de pages de listes
 		

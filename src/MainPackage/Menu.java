@@ -23,6 +23,7 @@ public class Menu extends BasicGameState {
 	private LoadMenu loadMenu;
 	private OptionsMenu optionsMenu;
 	private NewGameMenu newGameMenu;
+	private WindowGame wG;
 	
 	public Menu(int state)
 	{
@@ -31,12 +32,16 @@ public class Menu extends BasicGameState {
 	
 	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException
 	{
-		changeMenu(0);
+		if(((WindowGame)(sbg)).dead)changeMenu(4);
+		if(menu != 4) changeMenu(0);
+		wG = ((WindowGame)(sbg));
 	}
 	
 	public void changeMenu(int m)
 	{
+		if(menu == 4) wG.dead = false;
 		menu = m;
+		if(m == 2) loadMenu.reset();
 	}
 	
 	public void init(GameContainer gc,StateBasedGame sbg) throws SlickException // Initialisation de l'objet
@@ -89,6 +94,11 @@ public class Menu extends BasicGameState {
 		case 3:
 			newGameMenu.render(gc, sbg, g);
 			break;
+		case 4:
+			g.setBackground(Color.black);
+			g.drawString("Vous êtes mort", (float)(UIComponent.width*.5-(myFont.getWidth("Vous êtes mort")/2)),(float)(UIComponent.top+(UIComponent.height*.3)));
+			g.drawString("Appuyez sur une touche", (float)(UIComponent.width*.5-(myFont.getWidth("Appuyer sur une touche")/2)),(float)(UIComponent.top+(UIComponent.height*.6)));
+			break;
 		}
 	}
 	
@@ -117,7 +127,7 @@ public class Menu extends BasicGameState {
 			newGameMenu.update(gc, sbg, delta);
 			break;
 		case 4:
-			//Menu de pause
+			
 			break;
 		}
 	}
@@ -128,6 +138,7 @@ public class Menu extends BasicGameState {
 		{
 			changeMenu(0);
 		}
+		if( menu == 4) changeMenu(0);
 	}
 	
 	public int getID()

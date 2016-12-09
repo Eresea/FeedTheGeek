@@ -26,6 +26,7 @@ public void delete() // Supprime la sauvegarde concernée
 {
 	File f = new File("Saves/"+name+".sav");
 	f.delete();
+	name = "";
 }
 
 public boolean LoadData(String url) // Charge les données de l'url dans la partie
@@ -85,6 +86,7 @@ private List<String> setValues(List<String> l) // Setteur de valeurs
 
 public void SaveToFile() // Sauvegarde les données de la partie
 {
+	if(name == "") return;
 	String url = "Saves/"+name+".sav";
 	
 	System.out.println(url);

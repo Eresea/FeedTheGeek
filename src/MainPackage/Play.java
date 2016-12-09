@@ -119,8 +119,10 @@ public class Play extends BasicGameState { // Classe d'état qui gère le jeu prin
 			if(healthCurrent <= 0)
 			{
 				healthCurrent = 0;
-				WindowGame.Death();
+				((WindowGame)(sbg)).Death();
 				timer.cancel();
+				
+				sbg.enterState(0);
 			}
 		}
 		hud.updateValues(Math.min(1,healthCurrent), Math.min(1,hungerCurrent));
