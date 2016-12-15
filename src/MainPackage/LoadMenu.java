@@ -145,7 +145,6 @@ class listSaves // Classe listant les sauvegardes de parties différentes
 		System.out.print("RESET");
 		SaveButtons.clear();
 		
-		
 		File f = new File(System.getProperty("user.dir") + "\\Saves"); 
 		files = f.listFiles(new FilenameFilter() { // Récupère la liste de fichiers terminants par l'extension .sav dans le dossier Saves/
 		    @Override

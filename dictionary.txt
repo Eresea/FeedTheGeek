@@ -25,5 +25,18 @@ Bash
 Lisp
 Python
 Prolog
-RushB
-CykaBlyat
+WindowsVirus
+SQL-DUMP
+BruteForce
+KernelPanic
+BSOD
+UNIX
+rm /*
+CHMOD 777
+cd /home
+ls
+ipconfig
+hacknet
+arpanet
+syknet
+ping

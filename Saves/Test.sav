@@ -1,7 +1,15 @@
 black
 red
+<<<<<<< HEAD
 Money:5
 Inventory:{}
 health:1.0
 hunger:2.018889
 lastSave:1481829820
+=======
+Money:23
+Inventory:{}
+health:1.0
+hunger:0.8219445
+lastSave:1481288687
+>>>>>>> refs/remotes/origin/master
