@@ -46,12 +46,14 @@ public class Play extends BasicGameState { // Classe d'état qui gère le jeu prin
 		
 		WindowGame.changeMusic(1);
 		
+		timer = new Timer();
 		timer.schedule(new TimerTask() { // Horloge candencée pour tick toutes les secondes
-			  @Override
-			  public void run() {
-			   Tick();
-			  }
+				 @Override
+				 public void run() {
+				  Tick();
+				 }
 			}, 1000,1000);
+		
 		
 		/* couleur du Tshirt*/
 		if (WindowGame.PrimaryColor==Color.blue)
@@ -122,9 +124,9 @@ public class Play extends BasicGameState { // Classe d'état qui gère le jeu prin
 			if(healthCurrent <= 0)
 			{
 				healthCurrent = 0;
+				
+				timer.cancel();
 				((WindowGame)(sbg)).Death();
-				timer.purge();
-				//timer.cancel();
 				
 				sbg.enterState(0);
 			}

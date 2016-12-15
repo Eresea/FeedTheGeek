@@ -73,6 +73,7 @@ public class WindowGame extends StateBasedGame {
 	
 	public void Death() // Mort du personnage
 	{
+		System.out.println("Death");
 		dead = true;
 		enterState(0);
 		s.delete(); // Supprime la sauvegarde du personnage mort

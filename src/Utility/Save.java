@@ -111,21 +111,22 @@ public void SaveToFile() // Sauvegarde les données de la partie
 	    }
 }
 
-public static List<String> readWords(String filename) throws IOException {
+public static List<String> readWords(String filename) throws IOException { // Lit et retourne les données du fichier filename
     DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream(filename)));
     int count = dis.readInt();
     List<String> words = new ArrayList<String>(count);
     while (words.size() < count)
         words.add(dis.readUTF());
+    dis.close();
     return words;
 }
 
 
-public static void writeStrings(String filename, List<String> words) throws IOException {
+public static void writeStrings(String filename, List<String> words) throws IOException { // Ecrit dans le fichier filename les lignes words
     DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(filename)));
     dos.writeInt(words.size());
     for (String word : words)
-        dos.writeUTF(word);
+        dos.writeUTF(word); // Ecrire des string dans un fichier
     dos.close();
 }
 }
