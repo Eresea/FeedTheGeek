@@ -120,7 +120,8 @@ public class Play extends BasicGameState { // Classe d'état qui gère le jeu prin
 			{
 				healthCurrent = 0;
 				((WindowGame)(sbg)).Death();
-				timer.cancel();
+				timer.purge();
+				//timer.cancel();
 				
 				sbg.enterState(0);
 			}
@@ -179,12 +180,9 @@ public class Play extends BasicGameState { // Classe d'état qui gère le jeu prin
 		}
 		if(key == Input.KEY_ESCAPE)
 		{
-			//Sys.alert("Quitter ?", "ï¿½tes-vous sï¿½r de vouloir quitter");
-			/*if(DialogBox.DialogBox("Quitter","Etes-vous sur de vouloir quitter le jeu ?") == 0)
-			{
-				sbg.closeRequested();
-			}*/
 			WindowGame.Save();
+			timer.purge();//timer.cancel();
+			health = hunger = 1;
 			sbg.enterState(0);
 		}
 	}

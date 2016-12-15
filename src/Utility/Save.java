@@ -38,14 +38,13 @@ public boolean LoadData(String url) // Charge les données de l'url dans la parti
 	if(f.canRead())
 	{
 		try{
-		List<String> lines = Files.readAllLines(f.toPath());
+		List<String> lines = readWords(f.toPath().toString());//Files.readAllLines(f.toPath());
 		WindowGame.PrimaryColor = StringToColor(lines.get(0));
 		WindowGame.SecondaryColor = StringToColor(lines.get(1));
 		WindowGame.hud.Money = Integer.parseInt(lines.get(2).substring(6));
 		WindowGame.hud.setInventory(lines.get(3).substring(10,lines.get(3).length()-1));
 		WindowGame.hud.setHealthHunger(Float.parseFloat(lines.get(4).substring(7)), Float.parseFloat(lines.get(5).substring(7)));
 		lastSave = Integer.parseInt(lines.get(6).substring(9));
-		
 		return true;
 		} catch(IOException e)
 		{
@@ -104,13 +103,29 @@ public void SaveToFile() // Sauvegarde les données de la partie
 	      List<String> lines = Files.readAllLines(f.toPath());
 	      lines = setValues(lines);
 	      lines.add("lastSave:"+Calendar.getInstance().getTime().getTime()/1000);
-	      
-	    Files.write(f.toPath(), lines);
-	    
-	    System.out.println("SAVED");
+	    //Files.write(f.toPath(), lines);
+	      writeStrings(url,lines);
 	      
 	    } catch (IOException e) {
 	      System.out.println(e);
 	    }
+}
+
+public static List<String> readWords(String filename) throws IOException {
+    DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream(filename)));
+    int count = dis.readInt();
+    List<String> words = new ArrayList<String>(count);
+    while (words.size() < count)
+        words.add(dis.readUTF());
+    return words;
+}
+
+
+public static void writeStrings(String filename, List<String> words) throws IOException {
+    DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(filename)));
+    dos.writeInt(words.size());
+    for (String word : words)
+        dos.writeUTF(word);
+    dos.close();
 }
 }
