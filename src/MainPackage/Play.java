@@ -24,6 +24,7 @@ public class Play extends BasicGameState { // Classe d'état qui gère le jeu prin
 	private Color BackgroundColor = new Color(0.74117647058f,0.74117647058f,0.74117647058f);
 	public float health =1,hunger = 1; // Plus tard sera dans la classe personnage
 	public float healthCurrent, hungerCurrent;
+	
 	float sx=1,sy=1;
 	Timer timer = new Timer();
 	
@@ -42,6 +43,8 @@ public class Play extends BasicGameState { // Classe d'état qui gère le jeu prin
 		IdleGaming = new Animation(FondSprite,200);
 		
 		hud.updateValues(health, hunger);
+		
+		WindowGame.changeMusic(1);
 		
 		timer.schedule(new TimerTask() { // Horloge candencée pour tick toutes les secondes
 			  @Override

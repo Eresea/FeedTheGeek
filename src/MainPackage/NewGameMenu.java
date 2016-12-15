@@ -28,13 +28,13 @@ public class NewGameMenu {
 	
 	Color[] colors = {Color.black,Color.red,Color.blue,Color.green,Color.white};
 	
-	public NewGameMenu(GameContainer gc,Menu mM)
+	public NewGameMenu(GameContainer gc,Menu mM) // Initialisation des éléments d'interface
 	{
 		myFont = gc.getDefaultFont();
 		MainMenu = mM;
 		
 		BackButton = new Button(430,940,500,100,gc);
-		BackButton.text = "Back";
+		BackButton.text = "Retour";
 		StartButton = new Button(990,940,500,100,gc);
 		StartButton.text = "Jouer";
 		nomTBox = new TextBox(685,450,200,gc.getDefaultFont(),gc);
@@ -94,7 +94,7 @@ public class NewGameMenu {
 	
 	private void changedColorIndex() // Appelée quand l'index de couleur choisie a été changé
 	{
-		LowerColorIndex1.visible = !(ColorIndex1 == 0);
+		LowerColorIndex1.visible = !(ColorIndex1 == 0); // Change la visibilité des boutons < & > dans des cas où l'ont est aux bords des valeurs
 		LowerColorIndex2.visible = !(ColorIndex2 == 0);
 		HigherColorIndex1.visible = !(ColorIndex1 == 4);
 		HigherColorIndex2.visible = !(ColorIndex2 == 4);
@@ -106,10 +106,10 @@ public class NewGameMenu {
 		Input input = gc.getInput();
 		nomTBox.update(input);
 		
-		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) // Click reçu
 		{
-			if(BackButton.Hover()) MainMenu.changeMenu(0);
-			else if(StartButton.Hover())
+			if(BackButton.Hover()) MainMenu.changeMenu(0); // Le bouton de retour était survolé
+			else if(StartButton.Hover()) // Le bouton "jouer" était survolé
 			{
 				if(true) //Conditions
 				{

@@ -21,6 +21,7 @@ public class Work extends BasicGameState {
 	
 	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException // Entrée du joueur dans cette classe (State)
 	{
+		WindowGame.changeMusic(0);
 		miniGame = new TypingGame(gc);
 		this.sbg = sbg;
 		timer.schedule(new TimerTask() {

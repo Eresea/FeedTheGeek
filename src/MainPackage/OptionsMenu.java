@@ -19,11 +19,11 @@ public class OptionsMenu {
 	{
 		myFont = gc.getDefaultFont();
 		BackButton = new Button(660,940,600,100,gc);
-		BackButton.text = "Back";
+		BackButton.text = "Retour";
 		
 		FullScreenCB = new CheckBox(952,232,16,gc);
 		FullScreenCB.checked=gc.isFullscreen();
-		FullScreenCB.text = "Fullscreen : ";
+		FullScreenCB.text = "Plein écran : ";
 		
 		MainMenu = mM;
 	}

@@ -28,7 +28,7 @@ public class LoadMenu {
 		sD = new SaveDescription(gc);
 		lS = new listSaves(gc,sD);
 		BackButton = new Button(430,940,500,100,gc);
-		BackButton.text = "Back";
+		BackButton.text = "Retour";
 		LoadButton = new Button(990,940,500,100,gc);
 		LoadButton.text = "Charger";
 		

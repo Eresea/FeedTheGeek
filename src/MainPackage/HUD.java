@@ -33,10 +33,11 @@ private StateBasedGame sbg;
 		this.gc = gc;
 		this.sbg = sbg;
 		healthBar = new Bar(0,40,250,80,gc);
-		healthBar.text= "Health";
+		healthBar.text= "Vie";
 		hungerBar = new Bar(0,140,250,80,gc);
-		hungerBar.text = "Hunger";
-		Assiette = new Assiette(10,5,5,gc);
+		hungerBar.text = "Faim";
+		Assiette = new Assiette(0,0,0,gc);
+		Assiette.value = 0; // Initialise l'assiette avec un objet vide
 		Dialogs = new ArrayList<Dialog>();
 		
 		InventoryButton = new Button(1620,540,300,100,gc);
@@ -45,7 +46,7 @@ private StateBasedGame sbg;
 		
 		ShopButton = new Button(1620,440,300,100,gc);
 		ShopButton.BackGroundColor = Color.black;
-		ShopButton.text = "Shop";
+		ShopButton.text = "Magasin";
 		
 		Work = new Button(1620,640,300,100,gc);
 		Work.BackGroundColor = Color.black;
@@ -159,7 +160,7 @@ private StateBasedGame sbg;
 		hungerBar.setValue(hunger);
 	}
 
-	void update() // Gestion de l'intéraction entrée / sortie
+	void update() // Gestion de l'interaction entrée / sortie
 	{
 		switch(showUIType)
 		{
@@ -172,25 +173,25 @@ private StateBasedGame sbg;
 		}
 Input input = gc.getInput();
 		
-		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) // Click gauche
 		{
-			if(Assiette.Hover())
+			if(Assiette.Hover()) // L'assiette est survolée
 			{
 				int bouchee = Assiette.bouchee();
 				if(bouchee < 0) p.health = p.health+(float)(bouchee/100.0f);
 				else p.hunger = p.hunger +  (float)(bouchee)/100.0f;
 			}
-			if(InventoryButton.Hover())
+			if(InventoryButton.Hover()) // Le bouton d'inventaire est survolé
 			{
 				showUIType = 1;
 				InventoryButton.visible = false;
 			}
-			if(ShopButton.Hover())
+			if(ShopButton.Hover()) // Le bouton de magasin est survolé
 			{
 				showUIType = 2;
 				ShopButton.visible = false;
 			}
-			if(Work.Hover())
+			if(Work.Hover()) // Le bouton de travail est survolé
 			{
 				sbg.enterState(2);
 			}

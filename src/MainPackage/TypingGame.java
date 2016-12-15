@@ -21,25 +21,36 @@ public class TypingGame {
 		Actors = new ArrayList<TypingActor>();
 		//words = new ArrayList<String>
 		
+		String tmp = WindowGame.getConfig(1); // Récupère la ligne 1 du fichier config (nombre d'actors à chaque instant dans ce mini jeu)
+		if(tmp != "")
+		{
+			maxActors = Integer.parseInt(tmp);
+		}
+		tmp = WindowGame.getConfig(2); // Récupère la ligne du fichier config déterminant la vitesse des actors du mini jeu
+		if(tmp != "")
+		{
+			speed = Integer.parseInt(tmp);
+		}
+		
 		File f = new File("dictionary.txt");
 		try{
-			words = Files.readAllLines(f.toPath());
+			words = Files.readAllLines(f.toPath()); // Récupère les lignes du dictionnaire
 			} catch(IOException e)
 			{
 				System.out.println(e.getMessage());
 			}
-		words.add("test");
+		if(words.size() == 0) words.add("No dictionary");
 		
 	}
 	
 	public void Tick() // Tic de l'horloge
 	{
-		for(int i=0;i<maxActors;i++)
+		for(int i=0;i<maxActors;i++) // Pour chaque actors 'nécessaire'
 		{
-			int randI = RandInRange(0,words.size());
-			if(Actors.size() > i)
+			int randI = RandInRange(0,words.size()); // Valeur aléatoire entre 0 et le nombre de mots du dictionnaire
+			if(Actors.size() > i) // Si l'actor i n'existe pas
 			{
-				if(Actors.get(i).Tick())
+				if(Actors.get(i).Tick()) // Si la fonction retourne vrai alors l'actor doit être supprimé
 				{
 					Actors.remove(i);
 					points--;
@@ -52,12 +63,12 @@ public class TypingGame {
 	
 	public void keyPressed(char c) // Evènement de touche du clavier
 	{
-		for(int i=0;i<Actors.size();i++)
+		for(int i=0;i<Actors.size();i++) // Pour chaque actor
 		{
-			if(Actors.get(i).typed(c))
+			if(Actors.get(i).typed(c)) // Lance la fonction qui vérifie si cette touche été attendue, si retourne vrai alors le mot est complet
 			{
-				Actors.remove(i);
-				points++;
+				Actors.remove(i); // Supprime l'actor
+				points++; // Ajout un point au score
 			}
 		}
 	}
@@ -69,7 +80,7 @@ public class TypingGame {
 			Actors.get(i).render(g);
 		}
 		
-		g.drawString("Points : " + points, 0, 0);
+		g.drawString("Points : " + points, 0, 0); // Affiche les points
 	}
 	
 	private int RandInRange(int min, int max) // Renvoi un entier aléatoire entre min et max 
@@ -83,15 +94,17 @@ public class TypingGame {
 		int h = f.getHeight(s);
 		
 		int rand = -1;
-		while(rand < 0)
+		rand = RandInRange(0,gc.getWidth());
+		return rand;
+		/*while(rand < 0) Partie utilisable dans une mise à jour avec la condition que la fonction isAreaUsed soit terminée
 		{
 			rand = RandInRange(0,gc.getWidth());
-			for(int i=0;i<Actors.size();i++)
+			/for(int i=0;i<Actors.size();i++) 
 			{
 				if(Actors.get(i).isAreaUsed(rand, 0, w, h)) rand = -1;
 			}
 		}
-		return rand;
+		return rand;*/
 	}
 }
 
@@ -124,26 +137,26 @@ class TypingActor { // Mot qui s'affiche à taper pour gagner des points
 		return y > maxY;
 	}
 	
-	public boolean isAreaUsed(int x,int y,int w,int h) // Permettra de déterminer si le point fourni est occupé par l'objet
+	/*public boolean isAreaUsed(int x,int y,int w,int h) // Permettra de déterminer si le point fourni est occupé par l'objet
 	{
 		return false; // To finish
-	}
+	}*/
 	
 	public void render(Graphics g) // Affichage de l'élément
 	{
 		Color tmp = g.getColor();
 		g.setColor(BackgroundColor);
-		g.fillRect(x, y, myFont.getWidth(word), myFont.getHeight(word));
-		g.setColor(TextColor);
-		g.drawString(word, x, y);
-		g.setColor(DoneColor);
-		g.drawString(typedWord, x, y);
+		g.fillRect(x, y, myFont.getWidth(word), myFont.getHeight(word)); // Rectangle de fond
+		g.setColor(TextColor); // Remplace la couleur par la couleur de texte normal
+		g.drawString(word, x, y); // Affiche le texte complet
+		g.setColor(DoneColor); // Remplace la couleur par la couleur de texte actif
+		g.drawString(typedWord, x, y); // Affiche le texte actif par dessus
 		g.setColor(tmp);
 	}
 	
 	public boolean typed(char c) // Vérifie si la touche tapée est dans la continuité du mot
 	{
-		if(word.charAt(typedWord.length()) == c)
+		if(word.charAt(typedWord.length()) == c) // Si le caractère est la prochain demandé
 		{
 			typedWord += c;
 			return typedWord.length() == word.length();

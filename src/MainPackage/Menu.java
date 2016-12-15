@@ -32,6 +32,7 @@ public class Menu extends BasicGameState {
 	
 	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException
 	{
+		WindowGame.changeMusic(0);
 		if(((WindowGame)(sbg)).dead)changeMenu(4);
 		if(menu != 4) changeMenu(0);
 		wG = ((WindowGame)(sbg));
@@ -54,7 +55,7 @@ public class Menu extends BasicGameState {
 		OptionsButton = new Button(660,600,600,140,gc);
 		OptionsButton.text = "Options";
 		ExitButton = new Button(660,750,600,140,gc);
-		ExitButton.text = "Exit";
+		ExitButton.text = "Quitter";
 		
 		loadMenu = new LoadMenu(gc,this);
 		optionsMenu = new OptionsMenu(gc,this);

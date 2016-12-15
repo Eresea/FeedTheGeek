@@ -57,12 +57,15 @@ public class Assiette extends UIComponent{ // Classe d'élément graphique afficha
 	public void render(Graphics g) // Affichage de l'élément graphique
 	{
 		Color tmp = g.getColor();
-		if(perime()) g.setColor(Color.green);
-		else g.setColor(foodColor);
-		g.fillOval(width*x,top+(height*y), width*(100.0f/1920), value*-(height*(25.0f/1080)));
-		g.setColor(tmp);
-		//g.fillRect(0,25,100,50); // Assiette
-		g.fillRect(width*x,top+(height*y),width*(100.0f/1920),height*(25.0f/1080));
+		if(value > 0)
+		{
+			if(perime()) g.setColor(Color.green);
+			else g.setColor(foodColor);
+			g.fillOval(width*x,top+(height*y), width*(100.0f/1920), value*-(height*(25.0f/1080)));
+			g.setColor(tmp);
+			//g.fillRect(0,25,100,50); // Assiette
+			g.fillRect(width*x,top+(height*y),width*(100.0f/1920),height*(25.0f/1080));
+		}
 	}
 	
 	public boolean Hover() // Retourne vrai si l'élément est actuellement survolé par la souris
